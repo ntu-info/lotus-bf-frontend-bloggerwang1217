@@ -259,7 +259,8 @@ export function SearchContainer({ onSearch }) {
       <div className={styles.headerRow}>
         {/* Logo Section */}
         <div className={styles.logoSection}>
-          <img src="/LoTUS-BF_logo.png" alt="LoTUS-BF" className={styles.logoImage} />
+          {/* Use BASE_URL so the path respects Vite `base` (works on GitHub Pages project sites) */}
+          <img src={`${import.meta.env.BASE_URL}LoTUS-BF_logo.png`} alt="LoTUS-BF" className={styles.logoImage} />
           <div className={styles.logoText}>
             <span className={styles.main}>LoTUS-BF</span>
             <span className={styles.sub}>Location-or-Term Unified Search</span>
