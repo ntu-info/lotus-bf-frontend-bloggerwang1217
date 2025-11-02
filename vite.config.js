@@ -4,7 +4,10 @@ import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
-  base: '/',
+  // When deploying to GitHub Pages as a project site, set base to
+  // '/<repo-name>/' so built asset URLs include the repository path.
+  // Update this if you change the repository name or deploy to a user site.
+  base: '/lotus-bf-frontend-bloggerwang1217/',
 
   plugins: [react()],
   resolve: {
