@@ -1,0 +1,1 @@
+export { NiiViewer } from './NiiViewer';

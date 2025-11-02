@@ -13,7 +13,19 @@ export default defineConfig({
     }
   },
   server: {
-    allowedHosts: ['mil.psy.ntu.edu.tw']
+    allowedHosts: ['mil.psy.ntu.edu.tw'],
+    fs: {
+      allow: ['src', 'public', '.']
+    }
+  },
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url))
+      }
+    }
   }
 })
 

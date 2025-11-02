@@ -1,0 +1,192 @@
+/* MainLayout 模組樣式 */
+
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--bg-main);
+  overflow: hidden;
+}
+
+.header {
+  background-color: var(--bg-header);
+  border-bottom: 2px solid var(--tiffany-dark);
+  box-shadow: var(--shadow-md);
+  flex-shrink: 0;
+}
+
+.errorBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: rgba(255, 127, 80, 0.1);
+  border-bottom: 2px solid var(--coral-primary);
+  color: var(--coral-primary);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.closeError {
+  background: none;
+  border: none;
+  color: var(--coral-primary);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0 0.5rem;
+  transition: opacity 0.2s;
+}
+
+.closeError:hover {
+  opacity: 0.7;
+}
+
+/* Three-Column Container */
+.container {
+  display: grid;
+  grid-template-columns: 300px 1fr 350px;
+  gap: 0;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.leftColumn,
+.centerColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.leftColumn {
+  background-color: var(--bg-card-light);
+  border-right: 1px solid var(--border-color);
+}
+
+.centerColumn {
+  background-color: var(--bg-main);
+}
+
+.rightColumn {
+  background-color: var(--bg-card-light);
+  border-left: 1px solid var(--border-color);
+}
+
+/* Right Panel Wrapper */
+.rightPanelWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.panelHeader {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  flex-shrink: 0;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.panelContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 響應式設計 - 平板 */
+@media (max-width: 1200px) {
+  .container {
+    grid-template-columns: 280px 1fr 300px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .leftColumn {
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .rightColumn {
+    grid-column: 1 / -1;
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+    max-height: 300px;
+  }
+}
+
+/* 響應式設計 - 手機 */
+@media (max-width: 768px) {
+  .mainLayout {
+    height: auto;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .leftColumn,
+  .centerColumn,
+  .rightColumn {
+    min-height: 400px;
+    max-height: none;
+  }
+
+  .leftColumn {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .centerColumn {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .rightColumn {
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .errorBanner {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+/* Scrollbar Styling */
+.container > * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-main);
+}
+
+.container > *::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container > *::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+.container > *::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.container > *::-webkit-scrollbar-thumb:hover {
+  background: var(--border-dark);
+}

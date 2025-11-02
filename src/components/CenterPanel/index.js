@@ -1,0 +1,1 @@
+export { StudiesList } from './StudiesList';
