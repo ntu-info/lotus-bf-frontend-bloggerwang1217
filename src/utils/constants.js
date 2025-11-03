@@ -9,6 +9,7 @@ export const API_CONFIG = {
   TIMEOUT: 10000,
   CACHE_DURATION: {
     TERMS: Infinity,        // 詞庫永久快取
+    RELATED: 5 * 60 * 1000, // 相關詞 5 分鐘
     STUDIES: 5 * 60 * 1000, // 論文 5 分鐘
     LOCATIONS: 5 * 60 * 1000, // 座標 5 分鐘
     NII: 10 * 60 * 1000,    // NIfTI 10 分鐘
