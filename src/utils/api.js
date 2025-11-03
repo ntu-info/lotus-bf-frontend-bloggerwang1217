@@ -95,14 +95,12 @@ export const fetchRelatedTerms = async (term) => {
 // ========== 查詢相關 API ==========
 
 /**
- * 查詢論文
+ * 查詢論文 (獲取全部結果)
  * @param {string} query - 查詢字符串 (支持 AND/OR/NOT/座標等)
- * @param {number} limit - 分頁限制
- * @param {number} offset - 分頁偏移
  */
-export const fetchStudies = async (query, limit = 30, offset = 0) => {
+export const fetchStudies = async (query) => {
   const endpoint = API_ENDPOINTS.QUERY_STUDIES(query);
-  const params = { limit, offset };
+  const params = {}; // No params for full fetch
   const cachedData = cacheManager.get(endpoint, params);
   if (cachedData) {
     return cachedData;
@@ -111,8 +109,6 @@ export const fetchStudies = async (query, limit = 30, offset = 0) => {
   try {
     const controller = cancelRequest('studies');
     const url = new URL(`${API_CONFIG.BASE_URL}${endpoint}`);
-    url.searchParams.append('limit', limit);
-    url.searchParams.append('offset', offset);
 
     const response = await fetch(url.toString(), {
       signal: controller.signal,

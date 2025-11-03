@@ -3,9 +3,7 @@
 .rightPanel {
   display: flex;
   flex-direction: column;
-  height: 100%;
   background-color: var(--bg-main);
-  overflow: hidden;
 }
 
 .panelHeader {

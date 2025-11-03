@@ -1,7 +1,6 @@
 /**
  * RelatedTermsTags Component
- * Displays related terms as green clickable tags
- * Adapted from NeurosynthSearch RelatedTermsList & RelatedTermsPanel
+ * Renders only the list of related term tags or a loading indicator.
  */
 import React from 'react';
 import styles from './SearchBar.module.css';
@@ -12,42 +11,33 @@ export function RelatedTermsTags({
   loading = false,
   maxTags = 10,
 }) {
+  // This component now only renders the tags themselves, or a loading message.
+  // The container and label are handled by the parent (SearchContainer).
+
   if (terms.length === 0 && !loading) {
     return null;
   }
 
-  // Limit to top terms
   const displayTerms = terms.slice(0, maxTags);
 
   return (
-    <div className={styles.relatedTagsContainer}>
-      <div className={styles.relatedTagsLabel}>
-        {loading ? '⏳ Related terms...' : 'Related terms:'}
-      </div>
-      <div className={styles.relatedTags}>
-        {displayTerms.map((item) => (
-          <button
-            key={item.term}
-            className={styles.relatedTag}
-            onClick={() => onTermClick?.(item.term)}
-            disabled={loading}
-            title={`co_count: ${item.co_count}, jaccard: ${item.jaccard?.toFixed(4) || 'N/A'}`}
-          >
-            {item.term}
-            <span className={styles.tagScore}>{Math.round(item.co_count || 0)}</span>
-          </button>
-        ))}
-        {loading && (
-          <div style={{ 
-            fontSize: '0.9rem', 
-            color: 'var(--text-secondary)',
-            alignSelf: 'center',
-            marginLeft: '0.5rem'
-          }}>
-            loading...
-          </div>
-        )}
-      </div>
-    </div>
+    <>
+      {displayTerms.map((item) => (
+        <button
+          key={item.term}
+          className={styles.relatedTag}
+          onClick={() => onTermClick?.(item.term)}
+          disabled={loading}
+          title={`co_count: ${item.co_count}, jaccard: ${item.jaccard?.toFixed(4) || 'N/A'}`}
+        >
+          {item.term}
+        </button>
+      ))}
+      {loading && (
+        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+          loading...
+        </div>
+      )}
+    </>
   );
 }

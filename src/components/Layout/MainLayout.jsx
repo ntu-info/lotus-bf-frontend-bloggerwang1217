@@ -8,24 +8,23 @@ import { fetchStudies, fetchLocations, fetchHelp } from '../../utils/api';
 import { formatTrendData, formatJournalData } from '../../utils/stats';
 import { SearchContainer } from '../SearchBar';
 import { LeftPanel } from '../LeftPanel';
-import { StudiesList } from '../CenterPanel';
+import { CenterPanel } from '../CenterPanel/CenterPanel.jsx';
 import { NiiViewer } from '../RightPanel';
 import styles from './MainLayout.module.css';
 
 export function MainLayout() {
   const {
     query,
-    studies,
     setStudies,
     setLocations,
     setTrendData,
     setJournalData,
     setRelatedTerms,
-    loading,
     setLoading,
     error,
     setError,
     setPage,
+    setTotalCount,
   } = useContext(SearchContext);
 
   const handleSearch = useCallback(
@@ -40,19 +39,17 @@ export function MainLayout() {
       setPage(1);
 
       try {
-        // Fetch studies
+        // Fetch ALL studies at once
         const studiesResponse = await fetchStudies(searchQuery);
-        // API returns { results: [...], count: number }
         const studiesArray = studiesResponse?.results || [];
         setStudies(studiesArray);
+        setTotalCount(studiesResponse?.count || 0);
 
-        // Calculate statistics
-        if (studiesArray && studiesArray.length > 0) {
-          // Trend data (year over time)
+        // Calculate statistics from the full dataset
+        if (studiesArray.length > 0) {
           const trendFormatted = formatTrendData(studiesArray);
           setTrendData(trendFormatted);
 
-          // Journal data (top 20 journals)
           const journalFormatted = formatJournalData(studiesArray, 20);
           setJournalData(journalFormatted);
         } else {
@@ -60,33 +57,31 @@ export function MainLayout() {
           setTrendData([]);
           setJournalData([]);
           setRelatedTerms([]);
+          setTotalCount(0);
         }
 
-        // Fetch locations (for future use)
-        try {
-          const locationsData = await fetchLocations(searchQuery);
-          setLocations(locationsData || []);
-        } catch (err) {
-          console.warn('Error fetching locations:', err);
-        }
+        // Fetch other data in parallel
+        fetchLocations(searchQuery).then(setLocations).catch(err => console.warn('Error fetching locations:', err));
+        fetchHelp(searchQuery).catch(err => console.warn('Error fetching help:', err));
 
-        // Fetch help/context (optional)
-        try {
-          await fetchHelp(searchQuery);
-        } catch (err) {
-          console.warn('Error fetching help:', err);
-        }
       } catch (err) {
         setError(err.message || 'Search failed');
         setStudies([]);
         setTrendData([]);
         setJournalData([]);
+        setTotalCount(0);
       } finally {
         setLoading(false);
       }
     },
-    [setStudies, setLocations, setTrendData, setJournalData, setRelatedTerms, setLoading, setError, setPage]
+    [setStudies, setLocations, setTrendData, setJournalData, setRelatedTerms, setLoading, setError, setPage, setTotalCount]
   );
+
+  // With client-side pagination, this just needs to set the page number
+  const handlePageChange = useCallback((newPage) => {
+    setPage(newPage);
+    // Scroll to top of center panel might be a good UX improvement here
+  }, [setPage]);
 
   return (
     <div className={styles.mainLayout}>
@@ -116,9 +111,7 @@ export function MainLayout() {
         </aside>
 
         <main className={styles.centerColumn}>
-          <div className={styles.panelContent}>
-            <StudiesList studies={studies} isLoading={loading} />
-          </div>
+          <CenterPanel onPageChange={handlePageChange} />
         </main>
 
         <aside className={styles.rightColumn}>

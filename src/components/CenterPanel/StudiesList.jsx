@@ -1,18 +1,15 @@
 /**
  * StudiesList Component
- * Displays search results with PubMed links
- * Adapted from NeurosynthSearch ResultsList
+ * Displays search results in a flat list format, matching the prototype design.
  */
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { getPubMedUrl } from '../../utils/stats';
+import { SearchContext } from '../../context/SearchContext.jsx';
+import { PAGINATION } from '../../utils/constants';
 import styles from './CenterPanel.module.css';
 
 export function StudiesList({ studies = [], isLoading = false }) {
-  const [expandedId, setExpandedId] = useState(null);
-
-  const toggleExpanded = (studyId) => {
-    setExpandedId(expandedId === studyId ? null : studyId);
-  };
+  const { currentPage } = useContext(SearchContext);
 
   if (isLoading) {
     return (
@@ -31,95 +28,45 @@ export function StudiesList({ studies = [], isLoading = false }) {
     );
   }
 
+  const startIndex = (currentPage - 1) * PAGINATION.STUDIES_PER_PAGE;
+
   return (
     <div className={styles.studiesList}>
-      {studies.map((study) => {
-        const isExpanded = expandedId === study.study_id;
-        const pubmedUrl = getPubMedUrl(study.pubmed_id || study.id);
+      {studies.map((study, index) => {
+        const pubmedUrl = getPubMedUrl(study.pubmed_id || study.id || study.study_id);
+        const doiUrl = study.doi ? `https://doi.org/${study.doi}` : null;
 
         return (
-          <article
-            key={study.study_id || study.id}
-            className={`${styles.studyItem} ${isExpanded ? styles.expanded : ''}`}
-          >
-            <div
-              className={styles.studyHeader}
-              onClick={() => toggleExpanded(study.study_id || study.id)}
-              role="button"
-              tabIndex="0"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  toggleExpanded(study.study_id || study.id);
-                }
-              }}
-            >
-              <h3 className={styles.studyTitle}>{study.title}</h3>
-              <span className={styles.expandIcon}>
-                {isExpanded ? '▼' : '▶'}
-              </span>
+          <div key={study.study_id || study.id} className={styles.studyItem}>
+            {/* Left Column: Number and Cite button */}
+            <div className={styles.studyLeft}>
+              <span className={styles.studyNumber}>{startIndex + index + 1}</span>
+              <button className={styles.citeButton}>Cite</button>
             </div>
 
-            <div className={styles.studyMeta}>
-              <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>Authors:</span>
-                <span className={styles.metaValue}>
-                  {study.authors || 'N/A'}
-                </span>
-              </div>
-              <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>Journal:</span>
-                <span className={styles.metaValue}>
-                  {study.journal || 'N/A'}
-                </span>
-              </div>
-              <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>Year:</span>
-                <span className={styles.metaValue}>
-                  {study.year || 'N/A'}
-                </span>
-              </div>
+            {/* Right Column: Study Details */}
+            <div className={styles.studyRight}>
+              <a
+                href={pubmedUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.studyTitle}
+              >
+                {study.title}
+              </a>
+              <p className={styles.studyAuthors}>{study.authors}</p>
+              <p className={styles.studyMeta}>
+                {study.journal && <span className={styles.journal}>{study.journal}.</span>}
+                {study.year && <span>{study.year}.</span>}
+                {doiUrl && (
+                  <a href={doiUrl} target="_blank" rel="noopener noreferrer" className={styles.doiLink}>
+                    doi: {study.doi}
+                  </a>
+                )}
+              </p>
+              <p className={styles.studyPmid}>PMID: {study.pubmed_id || study.id || study.study_id}</p>
             </div>
-
-            {isExpanded && (
-              <div className={styles.studyDetails}>
-                <p className={styles.abstract}>
-                  {study.abstract || 'No abstract available'}
-                </p>
-                <div className={styles.studyLinks}>
-                  {pubmedUrl && (
-                    <a
-                      href={pubmedUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.pubmedLink}
-                    >
-                      📄 View on PubMed
-                    </a>
-                  )}
-                  {study.url && (
-                    <a
-                      href={study.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.publicationLink}
-                    >
-                      🔗 Publication Link
-                    </a>
-                  )}
-                </div>
-                <div className={styles.studyIds}>
-                  <div>
-                    <strong>Study ID:</strong> {study.study_id || study.id}
-                  </div>
-                  {study.contrast_id && (
-                    <div>
-                      <strong>Contrast ID:</strong> {study.contrast_id}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </article>
+          </div>
         );
       })}
     </div>

@@ -3,9 +3,7 @@
 .mainLayout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   background-color: var(--bg-main);
-  overflow: hidden;
 }
 
 .header {
@@ -13,6 +11,9 @@
   border-bottom: 2px solid var(--tiffany-dark);
   box-shadow: var(--shadow-md);
   flex-shrink: 0;
+  position: sticky; /* Make search bar sticky */
+  top: 0;
+  z-index: 1000;
 }
 
 .errorBanner {
@@ -46,9 +47,6 @@
   display: grid;
   grid-template-columns: 300px 1fr 350px;
   gap: 0;
-  flex: 1;
-  overflow: hidden;
-  min-height: 0;
 }
 
 .leftColumn,
