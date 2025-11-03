@@ -19,7 +19,7 @@ function isStandardMNI2mm(dims, voxelMM) {
 
 const MNI2MM = { x0: 90, y0: -126, z0: -72, vx: 2, vy: 2, vz: 2 };
 
-export function NiiViewer({ query }) {
+export function NiiViewer({ query, searchSuccess = false }) {
   const [loadingBG, setLoadingBG] = useState(false);
   const [loadingMap, setLoadingMap] = useState(false);
   const [errBG, setErrBG] = useState('');
@@ -56,14 +56,15 @@ export function NiiViewer({ query }) {
   const canvases = [useRef(null), useRef(null), useRef(null)];
 
   const mapUrl = useMemo(() => {
-    if (!query) return '';
+    // 只在搜尋成功且有 query 時才構建 URL
+    if (!query || !searchSuccess) return '';
     const u = new URL(`${API_CONFIG.BASE_URL}/query/${encodeURIComponent(query)}/nii`);
     u.searchParams.set('voxel', String(voxel));
     u.searchParams.set('fwhm', String(fwhm));
     u.searchParams.set('kernel', String(kernel));
     u.searchParams.set('r', String(r));
     return u.toString();
-  }, [query, voxel, fwhm, kernel, r]);
+  }, [query, searchSuccess, voxel, fwhm, kernel, r]);
 
   function asTypedArray(header, buffer) {
     switch (header.datatypeCode) {
@@ -519,8 +520,7 @@ export function NiiViewer({ query }) {
       {(loadingBG || loadingMap) && <div className={styles.loadingIndicator}>Loading...</div>}
       {(errBG || errMap) && (
         <div className={styles.errorMessage}>
-          {errBG && <div>Background: {errBG}</div>}
-          {errMap && <div>Map: {errMap}</div>}
+          No map found
         </div>
       )}
 

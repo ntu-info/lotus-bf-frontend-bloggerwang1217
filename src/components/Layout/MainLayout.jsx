@@ -10,9 +10,12 @@ import { SearchContainer } from '../SearchBar';
 import { LeftPanel } from '../LeftPanel';
 import { CenterPanel } from '../CenterPanel/CenterPanel.jsx';
 import { NiiViewer } from '../RightPanel';
+import { ToastContainer } from '../Common/ToastContainer';
+import { useToast } from '../../hooks/useToast';
 import styles from './MainLayout.module.css';
 
 export function MainLayout() {
+  const toast = useToast();
   const {
     query,
     setStudies,
@@ -23,6 +26,8 @@ export function MainLayout() {
     setLoading,
     error,
     setError,
+    searchSuccess,
+    setSearchSuccess,
     setPage,
     setTotalCount,
   } = useContext(SearchContext);
@@ -30,13 +35,14 @@ export function MainLayout() {
   const handleSearch = useCallback(
     async (searchQuery) => {
       if (!searchQuery || searchQuery.trim().length === 0) {
-        setError('Please enter a search term');
+        toast.warning('Please enter a search term');
+        setError('');
         return;
       }
 
       setLoading(true);
-      setError('');
       setPage(1);
+      setError('');
 
       try {
         // Fetch ALL studies at once
@@ -53,19 +59,22 @@ export function MainLayout() {
           const journalFormatted = formatJournalData(studiesArray, 20);
           setJournalData(journalFormatted);
         } else {
-          setError(`No studies found for "${searchQuery}". Try a different search term.`);
           setTrendData([]);
           setJournalData([]);
           setRelatedTerms([]);
           setTotalCount(0);
         }
 
+        // 搜尋成功（無論結果如何）
+        setSearchSuccess(true);
+
         // Fetch other data in parallel
         fetchLocations(searchQuery).then(setLocations).catch(err => console.warn('Error fetching locations:', err));
         fetchHelp(searchQuery).catch(err => console.warn('Error fetching help:', err));
 
       } catch (err) {
-        setError(err.message || 'Search failed');
+        // 搜尋失敗，不呼叫 right panel，不顯示 toast
+        setSearchSuccess(false);
         setStudies([]);
         setTrendData([]);
         setJournalData([]);
@@ -74,7 +83,7 @@ export function MainLayout() {
         setLoading(false);
       }
     },
-    [setStudies, setLocations, setTrendData, setJournalData, setRelatedTerms, setLoading, setError, setPage, setTotalCount]
+    [setStudies, setLocations, setTrendData, setJournalData, setRelatedTerms, setLoading, setError, setPage, setTotalCount, setSearchSuccess, toast]
   );
 
   // With client-side pagination, this just needs to set the page number
@@ -85,24 +94,13 @@ export function MainLayout() {
 
   return (
     <div className={styles.mainLayout}>
+      {/* Toast Notification Container */}
+      <ToastContainer />
+
       {/* Search Bar Header */}
       <header className={styles.header}>
         <SearchContainer onSearch={handleSearch} />
       </header>
-
-      {/* Error Message */}
-      {error && (
-        <div className={styles.errorBanner}>
-          <span>⚠️ {error}</span>
-          <button
-            className={styles.closeError}
-            onClick={() => setError('')}
-            aria-label="Close error"
-          >
-            ✕
-          </button>
-        </div>
-      )}
 
       {/* Three-Column Layout */}
       <div className={styles.container}>
@@ -120,7 +118,7 @@ export function MainLayout() {
               <h2 className={styles.panelTitle}>🧠 Brain Map</h2>
             </div>
             <div className={styles.panelContent}>
-              <NiiViewer query={query} />
+              <NiiViewer query={query} searchSuccess={searchSuccess} />
             </div>
           </div>
         </aside>

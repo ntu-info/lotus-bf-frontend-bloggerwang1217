@@ -10,6 +10,8 @@ export function RelatedTermsTags({
   onTermClick,
   loading = false,
   maxTags = 10,
+  focusedIndex = -1, // For keyboard navigation
+  onMouseEnter,
 }) {
   // This component now only renders the tags themselves, or a loading message.
   // The container and label are handled by the parent (SearchContainer).
@@ -22,12 +24,14 @@ export function RelatedTermsTags({
 
   return (
     <>
-      {displayTerms.map((item) => (
+      {displayTerms.map((item, index) => (
                   <button
                     key={item.term}
-                    className={styles.relatedTag}
+                    className={`${styles.relatedTag} ${focusedIndex === index ? styles.focused : ''}`}
                     onClick={() => onTermClick?.(item.term)}
                     disabled={loading}
+                    title="Click to insert at cursor"
+                    onMouseEnter={onMouseEnter}
                     data-tooltip={`co-occurrence: ${item.co_count}, jaccard: ${item.jaccard?.toFixed(4) || 'N/A'}`}
                   >
                     {item.term}

@@ -1,0 +1,150 @@
+/**
+ * Toast 組件樣式
+ * 支持淺色主題，採用 Coral Red + Tiffany Blue 配色
+ */
+
+.toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #f8f9fa;
+  border-left: 4px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Toast 類型特定樣式 */
+
+.toast-success {
+  background-color: #d4edda;
+  border-left-color: var(--tag-success);
+  color: #155724;
+}
+
+.toast-error {
+  background-color: #f8d7da;
+  border-left-color: var(--coral-dark);
+  color: #721c24;
+}
+
+.toast-info {
+  background-color: #d1ecf1;
+  border-left-color: var(--tiffany-primary);
+  color: #0c5460;
+}
+
+.toast-warning {
+  background-color: #fff3cd;
+  border-left-color: var(--accent-orange);
+  color: #856404;
+}
+
+/* Toast 內容 */
+
+.toastContent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.toastIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.toastMessage {
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 400px;
+}
+
+/* Toast 動作 */
+
+.toastActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.toastActionButton,
+.toastCloseButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  color: inherit;
+}
+
+.toastActionButton {
+  text-decoration: underline;
+}
+
+.toastActionButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.toastCloseButton {
+  opacity: 0.6;
+  font-size: 16px;
+}
+
+.toastCloseButton:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 響應式設計 */
+
+@media (max-width: 640px) {
+  .toast {
+    padding: 10px 12px;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+
+  .toastMessage {
+    max-width: 250px;
+  }
+
+  .toastActions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+}

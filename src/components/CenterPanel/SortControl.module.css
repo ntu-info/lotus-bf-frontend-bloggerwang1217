@@ -1,0 +1,89 @@
+/**
+ * SortControl 樣式
+ * 基於 Coral Red + Tiffany Blue 配色系統
+ */
+
+.sortControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background-color: var(--bg-card);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.select {
+  padding: 6px 10px;
+  font-size: 13px;
+  border: 1px solid var(--tiffany-dark);
+  border-radius: 4px;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.select:hover {
+  border-color: var(--tiffany-primary);
+  box-shadow: 0 0 0 2px rgba(64, 224, 208, 0.1);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--tiffany-primary);
+  box-shadow: 0 0 0 3px rgba(64, 224, 208, 0.2);
+}
+
+.directionButton {
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid var(--coral-primary);
+  border-radius: 4px;
+  background-color: var(--coral-primary);
+  color: var(--text-on-accent);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 40px;
+  text-align: center;
+}
+
+.directionButton:hover {
+  background-color: var(--coral-light);
+  border-color: var(--coral-light);
+  transform: scale(1.05);
+}
+
+.directionButton:active {
+  background-color: var(--coral-dark);
+  border-color: var(--coral-dark);
+  transform: scale(0.95);
+}
+
+/* 響應式設計 */
+
+@media (max-width: 768px) {
+  .sortControl {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .select {
+    min-width: 100px;
+    font-size: 12px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+}

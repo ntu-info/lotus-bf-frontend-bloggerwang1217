@@ -181,3 +181,56 @@ export const getLocationStats = (locations = []) => {
     }
   };
 };
+
+/**
+ * 對論文列表進行排序
+ * @param {Array} studies - 論文列表
+ * @param {string} sortField - 排序欄位 (year, journal, title, authors)
+ * @param {string} sortDirection - 排序方向 (asc, desc)
+ * @returns {Array} 排序後的論文列表
+ */
+export const sortStudies = (studies = [], sortField = 'year', sortDirection = 'desc') => {
+  if (!studies || studies.length === 0) return [];
+
+  const sorted = [...studies];
+
+  sorted.sort((a, b) => {
+    let valueA, valueB;
+
+    // 取得排序欄位的值
+    switch (sortField) {
+      case 'year':
+        valueA = (a.year || 0);
+        valueB = (b.year || 0);
+        break;
+      case 'journal':
+        valueA = (a.journal || '').toLowerCase();
+        valueB = (b.journal || '').toLowerCase();
+        break;
+      case 'title':
+        valueA = (a.title || '').toLowerCase();
+        valueB = (b.title || '').toLowerCase();
+        break;
+      case 'authors':
+        valueA = (a.authors || '').toLowerCase();
+        valueB = (b.authors || '').toLowerCase();
+        break;
+      default:
+        valueA = (a.year || 0);
+        valueB = (b.year || 0);
+    }
+
+    // 比較
+    let comparison = 0;
+    if (typeof valueA === 'number') {
+      comparison = valueA - valueB;
+    } else {
+      comparison = valueA.localeCompare(valueB);
+    }
+
+    // 根據方向反轉
+    return sortDirection === 'asc' ? comparison : -comparison;
+  });
+
+  return sorted;
+};

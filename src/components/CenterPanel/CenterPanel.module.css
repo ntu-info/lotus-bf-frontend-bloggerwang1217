@@ -12,8 +12,8 @@
   border-bottom: 1px solid var(--border-color);
   background-color: var(--bg-card);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .panelTitle {
@@ -21,6 +21,22 @@
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
+  line-height: 1.2;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.headerControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .panelContent {

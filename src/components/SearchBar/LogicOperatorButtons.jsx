@@ -7,7 +7,7 @@ import { SearchContext } from '../../context/SearchContext.jsx';
 import { OPERATORS } from '../../utils/constants';
 import styles from './SearchBar.module.css';
 
-export function LogicOperatorButtons({ onOperatorClick, focusedIndex }) {
+export function LogicOperatorButtons({ onOperatorClick, focusedIndex, onMouseEnter }) {
   const { operator } = useContext(SearchContext);
 
   return (
@@ -17,7 +17,8 @@ export function LogicOperatorButtons({ onOperatorClick, focusedIndex }) {
           key={op.id}
           className={`${styles.operatorButton} ${operator === op.id ? styles.active : ''} ${focusedIndex === index ? styles.focused : ''}`}
           onClick={() => onOperatorClick?.(op.label)}
-          title={`Insert ${op.label}`}
+          title="Click to insert at cursor"
+          onMouseEnter={onMouseEnter}
           type="button"
         >
           {op.label}

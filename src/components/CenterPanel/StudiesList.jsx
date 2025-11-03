@@ -9,7 +9,7 @@ import { PAGINATION } from '../../utils/constants';
 import styles from './CenterPanel.module.css';
 
 export function StudiesList({ studies = [], isLoading = false }) {
-  const { currentPage } = useContext(SearchContext);
+  const { currentPage, query } = useContext(SearchContext);
 
   if (isLoading) {
     return (
@@ -23,7 +23,11 @@ export function StudiesList({ studies = [], isLoading = false }) {
   if (studies.length === 0) {
     return (
       <div className={styles.emptyState}>
-        <p>No studies found. Try a different search.</p>
+        <p>
+          {query
+            ? `No studies found for "${query}". Try a different query.`
+            : 'No studies found. Try a different search.'}
+        </p>
       </div>
     );
   }
