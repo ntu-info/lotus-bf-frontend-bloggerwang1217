@@ -18,8 +18,8 @@
 }
 
 .logoImage {
-  height: 80px;
-  width: 80px;
+  height: 120px;
+  width: 120px;
   object-fit: contain;
 }
 
@@ -29,14 +29,14 @@
 }
 
 .logoTitle {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.1;
 }
 
 .logoSubtitle {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-weight: 500;
   color: var(--text-secondary);
   max-width: 180px;
@@ -62,25 +62,48 @@
   background: var(--coral-primary);
   border: none;
   border-radius: 4px;
-  font-size: 0.75rem; /* Even smaller font */
+  font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   color: white;
+  position: relative; /* For hover indicator */
 }
 
 .operatorButton:hover {
   background: var(--coral-light);
 }
 
-.operatorButton.active {
+.operatorButton.active,
+.operatorButton.focused {
   background: var(--coral-dark);
+  box-shadow: 0 0 0 2px var(--coral-light);
+}
+
+.operatorButton::before {
+  content: '▼';
+  position: absolute;
+  top: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: all 0.2s ease;
+  color: var(--coral-dark);
+  font-size: 0.8rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.operatorButton:hover::before {
+  opacity: 1;
+  top: 130%;
 }
 
 .searchInputWrapper {
   position: relative;
   display: flex;
   align-items: center;
+  z-index: 20; /* Higher than related terms, below autocomplete */
 }
 
 .searchInput {
@@ -91,6 +114,7 @@
   font-size: 1rem;
   outline: none;
   transition: all 0.3s ease;
+  background-color: var(--bg-main);
 }
 
 .clearButton {
@@ -123,9 +147,13 @@
   gap: 0.75rem;
   overflow-x: auto; /* Use horizontal scrolling */
   flex-wrap: nowrap;   /* Use horizontal scrolling */
-  padding-bottom: 4px;
+  padding: 8px 0;
   scrollbar-width: thin;
-  min-height: 28px; /* Reserve space to prevent layout shift */
+  min-height: 34px; /* Reserve space to prevent layout shift */
+  position: relative; 
+  z-index: 10; /* Below search input */
+  margin-top: -12px; /* Pull up to overlap with search input */
+  padding-top: 12px; /* Add padding back to align text */
 }
 
 .relatedTagsLabel {
@@ -147,19 +175,41 @@
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
+  position: relative; /* For hover indicator */
 }
 
-.relatedTag:hover {
+.relatedTag:hover,
+.relatedTag.focused {
   background-color: #B2DFDB;
+  box-shadow: 0 0 0 2px var(--tag-success-light);
+}
+
+.relatedTag::before {
+  content: '▲';
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: all 0.2s ease;
+  color: var(--tag-success-dark);
+  font-size: 0.8rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.relatedTag:hover::before {
+  opacity: 1;
+  bottom: 140%;
 }
 
 /* Autocomplete Popup */
 .autocompletePopup {
   position: absolute;
-  top: calc(100% + 4px);
+  top: 68px; /* Position below the search input wrapper */
   left: 0;
   width: 100%;
-  z-index: 1200;
+  z-index: 30; /* Highest z-index */
   box-shadow: 0 6px 18px rgba(0,0,0,0.12);
   border-radius: 6px;
   background: white;

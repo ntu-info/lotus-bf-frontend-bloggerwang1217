@@ -76,7 +76,14 @@ export function SearchContainer({ onSearch }) {
   };
 
   const handleRelatedTermClick = (term) => {
-    setQuery(prev => `${prev} AND ${term}`.trim());
+    setQuery(prevQuery => {
+      const trimmedQuery = prevQuery.trim();
+      if (trimmedQuery === '') {
+        return term; // If query is empty, just set the term
+      }
+      // Otherwise, append with AND
+      return `${trimmedQuery} AND ${term}`;
+    });
     setShowSuggestions(false);
   };
 

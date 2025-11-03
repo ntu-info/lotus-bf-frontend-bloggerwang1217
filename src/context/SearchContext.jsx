@@ -9,7 +9,7 @@ export const SearchContext = createContext();
 export const SearchProvider = ({ children }) => {
   // 搜尋框狀態
   const [query, setQuery] = useState('');
-  const [operator, setOperator] = useState('AND');
+  const [operator, setOperator] = useState(null);
   
   // 查詢結果
   const [studies, setStudies] = useState([]);

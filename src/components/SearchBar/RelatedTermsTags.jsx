@@ -23,16 +23,15 @@ export function RelatedTermsTags({
   return (
     <>
       {displayTerms.map((item) => (
-        <button
-          key={item.term}
-          className={styles.relatedTag}
-          onClick={() => onTermClick?.(item.term)}
-          disabled={loading}
-          title={`co_count: ${item.co_count}, jaccard: ${item.jaccard?.toFixed(4) || 'N/A'}`}
-        >
-          {item.term}
-        </button>
-      ))}
+                  <button
+                    key={item.term}
+                    className={styles.relatedTag}
+                    onClick={() => onTermClick?.(item.term)}
+                    disabled={loading}
+                    data-tooltip={`co-occurrence: ${item.co_count}, jaccard: ${item.jaccard?.toFixed(4) || 'N/A'}`}
+                  >
+                    {item.term}
+                  </button>      ))}
       {loading && (
         <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
           loading...
