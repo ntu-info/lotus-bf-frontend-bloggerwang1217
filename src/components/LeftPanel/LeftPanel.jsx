@@ -40,9 +40,9 @@ export function LeftPanel() {
                 <Line
                   type="monotone"
                   dataKey="count"
-                  stroke="var(--coral-primary)"
+                  stroke="var(--tiffany-primary)"
                   strokeWidth={2}
-                  dot={{ fill: 'var(--coral-primary)', r: 4 }}
+                  dot={{ fill: 'var(--tiffany-primary)', r: 4 }}
                   activeDot={{ r: 6 }}
                 />
               </LineChart>

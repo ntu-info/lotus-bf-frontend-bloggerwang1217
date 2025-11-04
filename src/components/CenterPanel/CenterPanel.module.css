@@ -203,19 +203,24 @@
 
 .paginationBtn {
   padding: 0.5rem 0.75rem;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
+  background-color: var(--coral-primary);
+  border: 1px solid var(--coral-dark);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text-on-accent);
 }
 
 .paginationBtn:hover:not(:disabled) {
-  background-color: var(--tiffany-primary);
-  border-color: var(--tiffany-primary);
+  background-color: var(--coral-light);
+  border-color: var(--coral-primary);
   color: var(--text-on-accent);
+}
+
+.paginationBtn:focus {
+  outline: 2px solid var(--coral-dark);
+  outline-offset: 2px;
 }
 
 .paginationBtn:disabled {

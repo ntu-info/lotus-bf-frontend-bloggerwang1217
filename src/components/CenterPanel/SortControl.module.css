@@ -24,7 +24,7 @@
 .select {
   padding: 6px 10px;
   font-size: 13px;
-  border: 1px solid var(--tiffany-dark);
+  border: 1px solid var(--coral-primary);
   border-radius: 4px;
   background-color: var(--bg-main);
   color: var(--text-primary);
@@ -34,14 +34,13 @@
 }
 
 .select:hover {
-  border-color: var(--tiffany-primary);
-  box-shadow: 0 0 0 2px rgba(64, 224, 208, 0.1);
+  border-color: var(--coral-dark);
 }
 
 .select:focus {
-  outline: none;
-  border-color: var(--tiffany-primary);
-  box-shadow: 0 0 0 3px rgba(64, 224, 208, 0.2);
+  outline: 2px solid var(--coral-dark);
+  outline-offset: 2px;
+  border-color: var(--coral-dark);
 }
 
 .directionButton {
@@ -56,6 +55,11 @@
   transition: all 0.2s ease;
   min-width: 40px;
   text-align: center;
+}
+
+.directionButton:focus {
+  outline: 2px solid var(--coral-dark);
+  outline-offset: 2px;
 }
 
 .directionButton:hover {
