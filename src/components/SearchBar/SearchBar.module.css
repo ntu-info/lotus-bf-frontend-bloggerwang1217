@@ -186,9 +186,9 @@
 
 .relatedTag {
   padding: 0.25rem 0.7rem;
-  background-color: #E0F2F1; /* Light teal background */
-  color: #00796B; /* Dark teal text */
-  border: 1px solid #B2DFDB; /* Teal border */
+  background-color: rgba(64, 224, 208, 0.15); /* Light Tiffany */
+  color: var(--tiffany-dark);
+  border: 1px solid var(--tiffany-primary);
   border-radius: 16px;
   font-size: 0.8rem;
   font-weight: 500;
@@ -200,9 +200,9 @@
 
 .relatedTag:hover,
 .relatedTag.focused {
-  background-color: #B2DFDB;
-  box-shadow: 0 0 0 2px var(--tag-success-light);
-  color: black;
+  background-color: var(--tiffany-primary);
+  box-shadow: 0 0 0 2px var(--tiffany-dark);
+  color: var(--text-primary);
 }
 
 .relatedTag::before {

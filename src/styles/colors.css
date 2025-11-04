@@ -1,56 +1,31 @@
 /* =====================================
-   LoTUS-BF × Neurosynth 色彩系統
-   基於 Logo 概念：Coral Red (腦) + Tiffany Blue (基礎)
+   Neurosynth-LoTUS 色彩系統 (淺色主題)
+   來自 NEUROSYNTH_LOTUS_FUSING_PLAN.md
    ===================================== */
 
 :root {
-  /* Coral Red 系列 (主色調 - 腦部元素、強調) */
-  --coral-primary: #FF7F50;    /* 主色 - 標題、強調、邏輯按鈕 */
-  --coral-light: #FFA07A;      /* 亮色 - 懸停、超連結 */
-  --coral-dark: #FF6347;       /* 暗色 - 活動、邊框、3D查看器 */
+  /* Coral Red 系列 (腦部元素、主要動作) */
+  --coral-primary:     #FF7F50;    /* 主色 - 標題、強調、邏輯按鈕 */
+  --coral-light:       #FFA07A;    /* 亮色 - 懸停、超連結 */
+  --coral-dark:        #E6683C;    /* 暗色 - 活動狀態 */
 
-  /* Tiffany Blue 系列 (次色調 - 基礎、互動) */
-  --tiffany-primary: #40E0D0;  /* 主色 - 按鈕、標籤頁、輸入焦點 */
-  --tiffany-light: #7FFFD4;    /* 亮色 - 懸停效果 */
-  --tiffany-dark: #00CED1;     /* 暗色 - 邊框、陰影、焦點邊框 */
+  /* Tiffany Blue 系列 (基礎、互動元素) */
+  --tiffany-primary:   #40E0D0;    /* 主色 - 按鈕、區塊背景 */
+  --tiffany-light:     #7FFFD4;    /* 亮色 - 懸停 */
+  --tiffany-dark:      #00CED1;    /* 暗色 - 邊框、陰影 */
 
-  /* 相關詞標籤 (綠色系) */
-  --tag-success: #20C997;      /* 綠色 - 相關詞按鈕主色 */
-  --tag-success-light: #51CF66;/* 亮綠 - 懸停 */
-  --tag-success-dark: #0F8446; /* 暗綠 - 選中、邊框 */
+
 
   /* Golden 系列 (裝飾、強調) */
-  --accent-gold: #FFD700;      /* 金色 - 浮動粒子、裝飾 */
-  --accent-orange: #FFA500;    /* 橙色 - 警告、次要強調 */
+  --accent-gold:       #FFD700;    /* 金色 - 裝飾 */
+  --accent-orange:     #FFA500;    /* 橙色 - 警告、次要強調 */
 
   /* 中性色 (淺色主題) */
-  --bg-header: #F1F3F5;        /* 頂部搜尋區背景 (淺灰) */
-  --bg-main: #FFFFFF;          /* 主內容區背景 (白色) */
-  --bg-card: #F8F9FA;          /* 卡片背景 (次要灰) */
-  --bg-card-light: #FFFFFF;    /* 亮卡片背景 */
-  --bg-hover: #FFFFFF;         /* 懸停背景 */
-
-  --text-primary: #212529;     /* 主文字 (深灰) */
-  --text-secondary: #6C757D;   /* 次要文字 (中灰) */
-  --text-on-accent: #FFFFFF;   /* 在強調色塊上的文字 (白色) */
-
-  --border-color: #DEE2E6;     /* 邊框 (淺灰) */
-  --border-dark: #CED4DA;      /* 深邊框 */
-  --border-light: #E9ECEF;     /* 亮邊框 */
-
-  /* 陰影 */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
-}
-
-/* 淺色模式主題 (當前為淺色模式) */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-main: #FFFFFF;
-    --bg-card: #F8F9FA;
-    --text-primary: #212529;
-    --text-secondary: #6C757D;
-    --border-color: #DEE2E6;
-  }
+  --bg-header:         #F1F3F5;    /* 頂部區塊背景 (淺灰) */
+  --bg-main:           #FFFFFF;    /* 主內容區背景 (白色) */
+  --bg-card:           #F8F9FA;    /* 卡片背景 (次要灰) */
+  --text-primary:      #212529;    /* 主文字 (深灰) */
+  --text-on-accent:    #FFFFFF;    /* 在強調色塊上的文字 (白色) */
+  --text-secondary:    #6C757D;    /* 次要文字 (中灰) */
+  --border-color:      #DEE2E6;    /* 邊框 (淺灰) */
 }

@@ -20,9 +20,11 @@ export function LeftPanel() {
         {/* Trend Chart */}
         {trendData && trendData.length > 0 && (
           <div className={styles.chartContainer}>
-            <h3 className={styles.chartTitle}>Publication Trend</h3>
+            <div className={styles.chartHeader}>
+              <h3 className={styles.chartTitle}>Publication Trend</h3>
+            </div>
             <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={trendData}>
+              <LineChart data={trendData} margin={{ top: 5, right: 30, left: 5, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
                 <XAxis dataKey="year" stroke="var(--text-secondary)" />
                 <YAxis stroke="var(--text-secondary)" />
@@ -51,21 +53,23 @@ export function LeftPanel() {
         {/* Journal Chart */}
         {journalData && journalData.length > 0 && (
           <div className={styles.chartContainer}>
-            <h3 className={styles.chartTitle}>Top Journals</h3>
-            <ResponsiveContainer width="100%" height={250}>
+            <div className={styles.chartHeader}>
+              <h3 className={styles.chartTitle}>Top Journals</h3>
+            </div>
+            <ResponsiveContainer width="100%" height={350}>
               <BarChart
                 data={journalData}
                 layout="vertical"
-                margin={{ top: 5, right: 30, left: 150, bottom: 5 }}
+                margin={{ top: 5, right: 30, left: 5, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
                 <XAxis type="number" stroke="var(--text-secondary)" />
                 <YAxis
-                  dataKey="journal"
+                  dataKey="shortName" // Use shortName for display
                   type="category"
                   stroke="var(--text-secondary)"
-                  width={140}
                   tick={{ fontSize: 11 }}
+                  labelFormatter={(label, payload) => payload[0]?.payload.name}
                 />
                 <Tooltip
                   contentStyle={{
@@ -74,6 +78,7 @@ export function LeftPanel() {
                     borderRadius: '4px',
                   }}
                   labelStyle={{ color: 'var(--text-primary)' }}
+                  labelFormatter={(label, payload) => payload[0]?.payload.name}
                 />
                 <Bar dataKey="count" fill="var(--tiffany-primary)" radius={[0, 4, 4, 0]} />
               </BarChart>

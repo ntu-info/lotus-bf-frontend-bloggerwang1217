@@ -37,11 +37,13 @@ export function StudiesList({ studies = [], isLoading = false }) {
   return (
     <div className={styles.studiesList}>
       {studies.map((study, index) => {
-        const pubmedUrl = getPubMedUrl(study.pubmed_id || study.id || study.study_id);
+        const rawId = study.pubmed_id || study.id || study.study_id || '';
+        const pmid = rawId.split('-')[0];
+        const pubmedUrl = getPubMedUrl(pmid);
         const doiUrl = study.doi ? `https://doi.org/${study.doi}` : null;
 
         return (
-          <div key={study.study_id || study.id} className={styles.studyItem}>
+          <div key={rawId} className={styles.studyItem}>
             {/* Left Column: Number and Cite button */}
             <div className={styles.studyLeft}>
               <span className={styles.studyNumber}>{startIndex + index + 1}</span>
@@ -68,7 +70,7 @@ export function StudiesList({ studies = [], isLoading = false }) {
                   </a>
                 )}
               </p>
-              <p className={styles.studyPmid}>PMID: {study.pubmed_id || study.id || study.study_id}</p>
+              <p className={styles.studyPmid}>PMID: {pmid}</p>
             </div>
           </div>
         );

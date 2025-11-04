@@ -65,6 +65,44 @@ export const formatTrendData = (studies = []) => {
 };
 
 /**
+ * 根據特定規則縮寫期刊名稱
+ * @param {string} name - 完整的期刊名稱
+ * @returns {string} 縮寫後的名稱
+ */
+const abbreviateJournalName = (name) => {
+  // 特殊處理規則
+  if (name.startsWith('The Journal of neuroscience:')) {
+    return 'J.N.';
+  }
+  if (name === 'Cortex; a journal devoted to the study of the nervous system and behavior') {
+    return 'Cortex';
+  }
+
+  // 移除標點符號
+  const cleanedName = name.replace(/[^a-zA-Z\s]/g, '');
+  const words = cleanedName.split(' ').filter(w => w.length > 0);
+
+  // 如果只有一個詞，直接返回
+  if (words.length <= 1) {
+    return cleanedName;
+  }
+
+  // 過濾停用詞並生成首字母縮寫
+  const stopWords = ['the', 'of', 'and', 'a', 'to', 'for', 'in'];
+  const acronym = words
+    .filter(word => !stopWords.includes(word.toLowerCase()))
+    .map(word => word[0].toUpperCase())
+    .join('.');
+
+  // 如果是縮寫詞，在結尾加上句點
+  if (acronym.includes('.')) {
+    return acronym + '.';
+  }
+
+  return acronym || cleanedName; // 如果過濾後為空，返回清理過的名稱
+};
+
+/**
  * 轉換期刊數據為圖表格式 (Recharts)
  * @param {Array} studies - 論文列表
  * @param {number} topCount - 返回最多數量
@@ -75,10 +113,7 @@ export const formatJournalData = (studies = [], topCount = 20) => {
     .map(({ journal, count }) => ({
       name: journal,
       count,
-      // 限制名稱長度以適應圖表
-      shortName: journal.length > 30 
-        ? journal.substring(0, 27) + '...' 
-        : journal
+      shortName: abbreviateJournalName(journal), // 使用新的縮寫函式
     }));
 };
 
