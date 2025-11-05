@@ -5,7 +5,7 @@
 
 :root {
   /* Coral Red 系列 (腦部元素、主要動作) */
-  --coral-primary:     #FF7F50;    /* 主色 - 標題、強調、邏輯按鈕 */
+  --coral-primary:     #fa7665;    /* 主色 - 標題、強調、邏輯按鈕 */
   --coral-light:       #FFA07A;    /* 亮色 - 懸停、超連結 */
   --coral-dark:        #E6683C;    /* 暗色 - 活動狀態 */
 

@@ -201,6 +201,11 @@
   flex: 1;
   min-width: 100px;
   cursor: pointer;
+  accent-color: var(--coral-primary);
+}
+
+.rangeInput:hover {
+  accent-color: var(--coral-dark);
 }
 
 /* Loading & Error States */

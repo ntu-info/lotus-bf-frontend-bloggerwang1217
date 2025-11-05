@@ -24,7 +24,6 @@ export function MainLayout() {
     setJournalData,
     setRelatedTerms,
     setLoading,
-    error,
     setError,
     searchSuccess,
     setSearchSuccess,
@@ -72,7 +71,7 @@ export function MainLayout() {
         fetchLocations(searchQuery).then(setLocations).catch(err => console.warn('Error fetching locations:', err));
         fetchHelp(searchQuery).catch(err => console.warn('Error fetching help:', err));
 
-      } catch (err) {
+      } catch {
         // 搜尋失敗，不呼叫 right panel，不顯示 toast
         setSearchSuccess(false);
         setStudies([]);
@@ -115,7 +114,7 @@ export function MainLayout() {
         <aside className={styles.rightColumn}>
           <div className={styles.rightPanelWrapper}>
             <div className={styles.panelHeader}>
-              <h2 className={styles.panelTitle}>🧠 Brain Map</h2>
+              <h2 className={styles.panelTitle}>Brain Map</h2>
             </div>
             <div className={styles.panelContent}>
               <NiiViewer query={query} searchSuccess={searchSuccess} />

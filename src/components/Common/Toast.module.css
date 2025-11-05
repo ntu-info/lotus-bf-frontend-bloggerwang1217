@@ -50,9 +50,9 @@
 }
 
 .toast-error {
-  background-color: #ffe6d5;
-  border-left-color: var(--coral-primary);
-  color: #7d3a1a;
+  background-color: #fff5e6;
+  border-left-color: var(--accent-gold);
+  color: #8b6f00;
 }
 
 .toast-info {
@@ -62,9 +62,9 @@
 }
 
 .toast-warning {
-  background-color: #ffe6d5;
-  border-left-color: var(--coral-primary);
-  color: #7d3a1a;
+  background-color: #ffe6cc;
+  border-left-color: var(--accent-orange);
+  color: #a05300;
 }
 
 /* Toast 內容 */

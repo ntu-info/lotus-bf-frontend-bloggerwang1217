@@ -37,7 +37,7 @@ export function LeftPanel() {
   return (
     <div className={styles.leftPanel}>
       <div className={styles.panelHeader}>
-        <h2 className={styles.panelTitle}>📊 Analytics</h2>
+        <h2 className={styles.panelTitle}>Analytics</h2>
       </div>
 
       <div className={styles.panelContent}>

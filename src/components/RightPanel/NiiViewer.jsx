@@ -196,17 +196,22 @@ export function NiiViewer({ query, searchSuccess = false }) {
         setCy('0');
         setCz('0');
       } catch (e) {
-        if (!alive) return;
+        if (!alive) {
+          bgRef.current = null;
+          return;
+        }
         setErrBG(e?.message || String(e));
         bgRef.current = null;
       } finally {
-        if (!alive) return;
-        setLoadingBG(false);
+        if (alive) {
+          setLoadingBG(false);
+        }
       }
     })();
     return () => {
       alive = false;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -215,6 +220,7 @@ export function NiiViewer({ query, searchSuccess = false }) {
     if (thrValue < mn || thrValue > mx) {
       setThrValue(Math.min(mx, Math.max(mn, thrValue)));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapRef.current, dims]);
 
   useEffect(() => {
@@ -244,17 +250,22 @@ export function NiiViewer({ query, searchSuccess = false }) {
           setCz('0');
         }
       } catch (e) {
-        if (!alive) return;
+        if (!alive) {
+          mapRef.current = null;
+          return;
+        }
         setErrMap(e?.message || String(e));
         mapRef.current = null;
       } finally {
-        if (!alive) return;
-        setLoadingMap(false);
+        if (alive) {
+          setLoadingMap(false);
+        }
       }
     })();
     return () => {
       alive = false;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapUrl]);
 
   const mapThreshold = useMemo(() => {
@@ -262,6 +273,7 @@ export function NiiViewer({ query, searchSuccess = false }) {
     if (!mv) return null;
     if (thrMode === 'value') return Number(thrValue) || 0;
     return percentile(mv.data, Math.max(0, Math.min(100, Number(pctl) || 95)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [thrMode, thrValue, pctl, mapRef.current]);
 
   function drawSlice(canvas, axis, index) {
@@ -347,8 +359,8 @@ export function NiiViewer({ query, searchSuccess = false }) {
     ctx.putImageData(img, 0, 0);
 
     ctx.save();
-    ctx.strokeStyle = '#00ff00';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#40E0D0';  // Tiffany Primary
+    ctx.lineWidth = 2;
     let cx = 0,
       cy = 0;
     if (axis === 'z') {
@@ -408,6 +420,7 @@ export function NiiViewer({ query, searchSuccess = false }) {
     setCx(String(idx2coord(ix, nx, 'x')));
     setCy(String(idx2coord(iy, ny, 'y')));
     setCz(String(idx2coord(iz, nz, 'z')));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ix, iy, iz, dims]);
 
   const commitCoord = (axis) => {
@@ -430,6 +443,7 @@ export function NiiViewer({ query, searchSuccess = false }) {
     if (c0 && iz >= 0 && iz < nz) drawSlice(c0, 'z', iz);
     if (c1 && iy >= 0 && iy < ny) drawSlice(c1, 'y', iy);
     if (c2 && ix >= 0 && ix < nx) drawSlice(c2, 'x', ix);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dims, ix, iy, iz, overlayAlpha, posOnly, useAbs, thrMode, pctl, thrValue, loadingBG, loadingMap, errBG, errMap, query]);
 
   const [nx, ny, nz] = dims;
