@@ -84,19 +84,35 @@
 }
 
 .citeButton {
-  background: none;
-  border: 1px solid var(--border-color);
-  color: var(--text-secondary);
   padding: 0.2rem 0.8rem;
   font-size: 0.8rem;
+  font-weight: 400;
+  border: 1px solid var(--coral-primary);
   border-radius: 4px;
+  background-color: transparent;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .citeButton:hover {
-  background-color: var(--bg-card);
-  border-color: var(--text-secondary);
+  background-color: transparent;
+  border-color: var(--coral-primary);
+  color: var(--coral-primary);
+  box-shadow: 0 0 0 2px rgba(255, 127, 80, 0.2);
+}
+
+.citeButton:active {
+  background-color: transparent;
+  border-color: var(--coral-dark);
+  color: var(--coral-dark);
+  transform: scale(0.95);
+}
+
+.citeButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 127, 80, 0.3);
 }
 
 .studyRight {
