@@ -44,15 +44,15 @@
 /* Toast 類型特定樣式 */
 
 .toast-success {
-  background-color: #d4edda;
-  border-left-color: var(--tag-success);
-  color: #155724;
+  background-color: #e7fafa;
+  border-left-color: var(--tiffany-primary);
+  color: #0a5f5f;
 }
 
 .toast-error {
-  background-color: #f8d7da;
-  border-left-color: var(--coral-dark);
-  color: #721c24;
+  background-color: #ffe6d5;
+  border-left-color: var(--coral-primary);
+  color: #7d3a1a;
 }
 
 .toast-info {
@@ -62,9 +62,9 @@
 }
 
 .toast-warning {
-  background-color: #fff3cd;
-  border-left-color: var(--accent-orange);
-  color: #856404;
+  background-color: #ffe6d5;
+  border-left-color: var(--coral-primary);
+  color: #7d3a1a;
 }
 
 /* Toast 內容 */
@@ -74,11 +74,6 @@
   align-items: center;
   gap: 10px;
   flex: 1;
-}
-
-.toastIcon {
-  font-size: 18px;
-  flex-shrink: 0;
 }
 
 .toastMessage {

@@ -1,0 +1,369 @@
+
+ ▐▛███▜▌   Claude Code v2.0.33
+▝▜█████▛▘  Haiku 4.5 · Claude API
+  ▘▘ ▝▝    /…/心理與神經資訊學/lotus-bf-frontend-bloggerwang1217
+═════════ Conversation compacted · ctrl+o for history ════════
+  ⎿  Read src/components/SearchBar/SearchInput.jsx (98 lines)
+  ⎿ Read src/components/SearchBar/SearchContainer.jsx (345 
+    lines)
+  ⎿ Read src/components/SearchBar/SearchBar.module.css (283 
+    lines)
+  ⎿ Read src/components/SearchBar/ExportButton.module.css (134
+     lines)
+  ⎿ Read src/components/SearchBar/ExportButton.jsx (138 lines)
+
+
+⏺ I'll continue implementing the Download Map button for
+  the Brain Map container. Let me start by exploring the
+  current Brain Map structure and understanding how to
+  integrate the download functionality.
+
+⏺ Read(src/components/RightPanel)
+  ⎿  Error: EISDIR: illegal operation on a directory, read
+
+⏺ Explore(Find Brain Map and RightPanel structure)
+  ⎿  Done (8 tool uses · 34.9k tokens · 24.9s)           
+
+⏺ Now let me read the current NiiViewer.jsx to understand
+  the full structure:
+
+⏺ Read(src/components/RightPanel/NiiViewer.jsx)
+  ⎿  Read 80 lines
+
+⏺ Read(src/components/Layout/MainLayout.jsx)
+  ⎿  Read 129 lines
+
+⏺ Now I'll create the DownloadMapButton component. Let me
+  first check the ExportButton styling to reuse it:
+
+⏺ Read(src/components/SearchBar/ExportButton.module.css)
+  ⎿  Read 134 lines
+
+⏺ Read(src/components/Layout/MainLayout.module.css)
+  ⎿  Read 159 lines
+
+⏺ Now I'll create the DownloadMapButton component. Let me
+  create both the component and its styles:
+
+⏺ Write(src/components/RightPanel/DownloadMapButton.jsx)
+  ⎿  Wrote 41 lines to                                   
+     src/components/RightPanel/DownloadMapButton.jsx
+     /**
+      * DownloadMapButton Component
+      * Allows downloading NIfTI brain map in various 
+     formats
+      * Styled to match ExportButton
+      */
+     import React, { useMemo } from 'react';
+     import { API_CONFIG } from '../../utils/constants';
+     import styles from './DownloadMapButton.module.css';
+     … +31 lines (ctrl+o to expand)
+
+⏺ Write(src/components/RightPanel/DownloadMapButton.module.css
+       )
+  ⎿  Wrote 55 lines to src/components/RightPanel/Download
+     apButton.module.css
+     /**
+      * DownloadMapButton 樣式
+      * 基於 Coral Red 配色系統，與 ExportButton 風格一致
+      */
+     .downloadButton {
+       padding: 8px 16px;
+       font-size: 14px;
+       font-weight: 400;
+       border: 1px solid var(--coral-primary);
+     … +45 lines (ctrl+o to expand)
+
+⏺ Read(src/components/RightPanel/index.js)
+  ⎿  Read 2 lines
+
+⏺ Update(src/components/RightPanel/index.js)
+  ⎿  Updated src/components/RightPanel/index.js with 1 
+     addition
+       1    export { NiiViewer } from './NiiViewer';
+       2 +  export { DownloadMapButton } from 
+         + './DownloadMapButton';
+
+⏺ Now let me update MainLayout.jsx to include the
+  DownloadMapButton:
+
+⏺ Update(src/components/Layout/MainLayout.jsx)
+  ⎿  Updated src/components/Layout/MainLayout.jsx with 1 
+     addition and 1 removal
+        9    import { SearchContainer } from 
+            '../SearchBar';
+       10    import { LeftPanel } from '../LeftPanel';
+       11    import { CenterPanel } from 
+            '../CenterPanel/CenterPanel.jsx';
+       12 -  import { NiiViewer } from '../RightPanel';
+       12 +  import { NiiViewer, DownloadMapButton 
+          +  } from '../RightPanel';
+       13    import { ToastContainer } from 
+            '../Common/ToastContainer';
+       14    import { useToast } from 
+            '../../hooks/useToast';
+       15    import styles from 
+            './MainLayout.module.css';
+
+⏺ Update(src/components/Layout/MainLayout.jsx)
+  ⎿  Updated src/components/Layout/MainLayout.jsx with 1 
+     addition
+       116              <div 
+             className={styles.rightPanelWrapper}>
+       117                <div 
+             className={styles.panelHeader}>
+       118                  <h2 
+             className={styles.panelTitle}>🧠 Brain 
+             Map</h2>
+       119 +                <DownloadMapButton 
+           + query={query} 
+           + searchSuccess={searchSuccess} />
+       120                </div>
+       121                <div 
+             className={styles.panelContent}>
+       122                  <NiiViewer query={query} 
+             searchSuccess={searchSuccess} />
+
+⏺ Now let me update the CSS to make the panelHeader flex
+  with space-between layout:
+
+⏺ Update(src/components/Layout/MainLayout.module.css)
+  ⎿  Updated src/components/Layout/MainLayout.module.css 
+     with 4 additions
+       55    }
+       56    
+       57    .panelHeader {
+       58 +    display: flex;
+       59 +    align-items: center;
+       60 +    justify-content: space-between;
+       61      padding: 1rem;
+       62      border-bottom: 1px solid 
+            var(--border-color);
+       63      background-color: var(--bg-card);
+       64      flex-shrink: 0;
+       65 +    gap: 1rem;
+       66    }
+       67    
+       68    .panelTitle {
+
+⏺ Perfect! Now let me verify the implementation by
+  checking if there are any syntax or compilation errors:
+
+⏺ Bash(npm run build 2>&1 | head -100)
+  ⎿  > lotus-frontend@0.0.0 build  
+     > vite build
+     … +22 lines (ctrl+o to expand)
+
+⏺ Excellent! The build succeeded with no errors. Let me
+  verify the final implementation by checking the updated
+  MainLayout.jsx:
+
+⏺ Read(src/components/Layout/MainLayout.jsx)
+  ⎿  Read 130 lines
+
+⏺ Let me also verify the DownloadMapButton component is
+  correct:
+
+⏺ Read(src/components/RightPanel/DownloadMapButton.jsx)
+  ⎿  Read 41 lines
+
+⏺ Read(src/components/RightPanel/DownloadMapButton.module.css)
+  ⎿  Read 55 lines
+
+⏺ Perfect! Let me verify the RightPanel index.js export:
+
+⏺ Read(src/components/RightPanel/index.js)
+  ⎿  Read 3 lines
+
+⏺ Read(src/components/Layout/MainLayout.module.css)
+  ⎿  Read 75 lines
+
+⏺ Excellent! All the implementation is complete and the
+  build succeeds. Let me run the development server to
+  verify everything works correctly:
+
+⏺ Bash(npm run dev > /tmp/dev.log 2>&1 & echo $!)
+  ⎿  41894
+
+⏺ Bash(sleep 3 && cat /tmp/dev.log | tail -30)
+  ⎿  Interrupted · What should Claude do instead?
+
+> 看起來成功了！Download Map 按鈕還是移到 NIfTI Viewer 
+容器的右上角好了。然後幫我檢查是否 NiiViewer 和 
+NiiViewerOld 
+的實作有差別嗎？是不是我現在把腦照片變成方形，原本不是？ 
+
+⏺ 好的！我來幫你做兩件事：
+  1. 把 Download Map 按鈕移到 NiiViewer 組件內部的右上角
+  2. 比較 NiiViewer 和 NiiViewerOld 的實作差異
+
+  讓我先讀取兩個 NiiViewer 文件來比較：
+
+⏺ Read(src/components/RightPanel/NiiViewer.jsx)
+  ⎿  Read 561 lines
+
+⏺ Read(src/components/RightPanel/NiiViewerOld.jsx)
+  ⎿  Read 525 lines
+
+⏺ 好的！我來幫你分析兩個版本的差異，並把 Download Map
+  按鈕移到 NiiViewer 容器右上角。讓我先檢查 CSS 樣式：
+
+⏺ Read(src/components/RightPanel/RightPanel.module.css)
+  ⎿  Read 216 lines
+
+⏺ 完美！我找到問題了！讓我分析給你看：
+
+  NiiViewer vs NiiViewerOld 差異分析
+
+  關鍵差異：腦圖片變成方形的原因
+
+  RightPanel.module.css (Line 143)：
+  .sliceCanvas {
+    aspect-ratio: 1;  /* 👈 這行強制所有 canvas 
+  變成正方形！ */
+  }
+
+  NiiViewerOld.jsx 使用 Tailwind：
+  <canvas className='h-64 w-full' />  /* 
+  固定高度，寬度100%，沒有 aspect-ratio */
+
+  原始大腦切片尺寸
+
+  - Axial (Z): 91 × 109 (寬 × 高) - 不是正方形！
+  - Coronal (Y): 91 × 91 - 正方形
+  - Sagittal (X): 109 × 91 - 不是正方形！
+
+  所以 aspect-ratio: 1 會把 Axial 和 Sagittal
+  切片壓縮/拉伸成正方形，導致大腦形狀失真！
+
+  其他主要差異
+
+  | 特性               | NiiViewer.jsx (新版)
+         | NiiViewerOld.jsx (舊版) |
+  |------------------|------------------------------------
+  ---|-----------------------|
+  | 樣式系統             | CSS Modules
+         | Tailwind CSS          |
+  | Canvas 長寬比       | aspect-ratio: 1 (強制方形)
+            | h-64 w-full (固定高度)    |
+  | Download 按鈕      | ❌ 無
+         | ✅ 有 (Line 406)        |
+  | searchSuccess 檢查 | ✅ 有
+         | ❌ 無                   |
+  | Grid 佈局          | grid-template-columns: repeat(3, 
+  1fr) | 同左 (inline style)     |
+
+  ---
+  修復計畫
+
+  我需要做三件事：
+
+  1. 修復方形問題
+
+  移除 RightPanel.module.css 中的 aspect-ratio: 1，改為
+  height: auto 以保留原始長寬比
+
+  2. 移動 Download Map 按鈕
+
+  - 從 MainLayout.jsx 的 panelHeader 移除
+  DownloadMapButton
+  - 在 NiiViewer.jsx 內部加入 header，包含「NIfTI
+  Viewer」標題和「Download Map」按鈕（右對齊）
+  - 按鈕樣式保持與 ExportButton 一致
+
+  3. 調整佈局
+
+  - NiiViewer 內部加入 flex header：左邊標題，右邊
+  Download Map 按鈕
+  - 恢復 MainLayout panelHeader 為單純的標題顯示
+
+  準備好執行了嗎？
+
+> 那功能面是一樣的嗎？ 
+
+⏺ 讓我仔細比對兩個版本的功能差異：
+
+  功能對比分析
+
+  ✅ 相同的核心功能
+
+  | 功能               | NiiViewer.jsx (新版)       |
+  NiiViewerOld.jsx (舊版) | 狀態  |
+  |------------------|--------------------------|---------
+  --------------|-----|
+  | 顯示 3 個大腦切面       | ✅ Coronal/Sagittal/Axial |
+  ✅ 同左                  | 相同  |
+  | 閾值模式切換           | ✅ Percentile / Value     |
+  ✅ 同左                  | 相同  |
+  | Percentile 調整    | ✅ (50-99.9)              | ✅
+  同左                  | 相同  |
+  | X/Y/Z 座標輸入       | ✅ MNI 座標系統               |
+   ✅ 同左                  | 相同  |
+  | Gaussian FWHM 控制 | ✅ (Line 547-549)         | ✅
+  (Line 509-512)      | 相同  |
+  | Overlay Alpha 滑桿 | ✅ (Line 554-556)         | ✅
+  (Line 517-521)      | 相同  |
+  | 點擊切片移動十字線        | ✅ onCanvasClick
+  | ✅ 同左                  | 相同  |
+  | 自動重新渲染           | ✅ useEffect 監聽           |
+   ✅ 同左                  | 相同  |
+
+  ❌ 功能差異
+
+  | 功能               | 新版             | 舊版
+     | 影響    |
+  |------------------|----------------|----------------|--
+  -----|
+  | Download Map 按鈕  | ❌ 無            | ✅ 有 (Line
+  406) | 缺失    |
+  | searchSuccess 檢查 | ✅ 有            | ❌ 無
+     | 新版更嚴謹 |
+  | Canvas 長寬比       | ⚠️ 強制 1:1 (失真) | ✅
+  保持原始比例       | Bug   |
+  | 樣式系統             | CSS Modules    | Tailwind
+   | 視覺一致性 |
+
+  🔧 參數狀態對比
+
+  雖然舊版定義了更多 setState，但實際 UI 中沒有使用：
+
+  | 參數           | 新版 UI      | 舊版 UI
+          | 實際影響 |
+  |--------------|------------|---------------------------
+  --|------|
+  | voxel        | 固定 2.0     | 固定 2.0 (有 setter 但無
+   UI)     | 無差異  |
+  | kernel       | 固定 'gauss' | 固定 'gauss' (有 setter
+  但無 UI) | 無差異  |
+  | r            | 固定 6.0     | 固定 6.0 (有 setter 但無
+   UI)     | 無差異  |
+  | posOnly      | 固定 true    | 固定 true (有 setter
+  但無 UI)    | 無差異  |
+  | useAbs       | 固定 false   | 固定 false (有 setter
+  但無 UI)   | 無差異  |
+  | fwhm         | ✅ 可調整      | ✅ 可調整
+            | 相同   |
+  | overlayAlpha | ✅ 可調整      | ✅ 可調整
+            | 相同   |
+
+  ---
+  結論：功能幾乎完全相同
+
+  唯二的實際差異：
+  1. Download Map 按鈕缺失 - 這就是我們要修復的
+  2. Canvas 被壓成正方形 - 這是 CSS bug
+
+  其他所有功能（大腦顯示、互動、參數調整）完全一致。舊版雖
+  然程式碼中有更多 setter，但實際 UI 並沒有使用它們。
+
+  準備好執行修復了嗎？我會：
+  1. 移除 aspect-ratio: 1 恢復正確長寬比
+  2. 將 Download Map 按鈕整合進 NiiViewer 標題列
+  3. 保持所有現有功能不變
+
+> 好的，幫我實作 
+  ⎿  Session limit reached ∙ resets 2am
+     /upgrade to increase your usage limit.
+
+
+

@@ -22,10 +22,17 @@ export const SearchProvider = ({ children }) => {
   const [searchSuccess, setSearchSuccess] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [pageSize, setPageSize] = useState(30); // 每頁顯示數量
 
   // 排序狀態
   const [sortField, setSortField] = useState('year');      // year, journal, title, authors
   const [sortDirection, setSortDirection] = useState('desc'); // asc, desc
+
+  // 篩選器狀態 (從圖表點擊觸發)
+  const [filters, setFilters] = useState({
+    year: null,       // 選中的年份
+    journal: null,    // 選中的期刊名稱
+  });
 
   // 相關詞和建議
   const [relatedTerms, setRelatedTerms] = useState([]);
@@ -46,6 +53,7 @@ export const SearchProvider = ({ children }) => {
     setRelatedTerms([]);
     setTrendData(null);
     setJournalData(null);
+    setFilters({ year: null, journal: null });
   }, []);
 
   return (
@@ -77,12 +85,18 @@ export const SearchProvider = ({ children }) => {
         setPage: setCurrentPage,
         totalCount,
         setTotalCount,
+        pageSize,
+        setPageSize,
 
         // 排序
         sortField,
         setSortField,
         sortDirection,
         setSortDirection,
+
+        // 篩選器
+        filters,
+        setFilters,
 
         // 建議
         relatedTerms,

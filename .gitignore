@@ -1,8 +1,9 @@
 # Prototype folder
 prototype/
 
-# NeurosynthSearch folder
+# Old project folder
 NeurosynthSearch/
+lotus-bf/
 
 # Node modules
 node_modules/

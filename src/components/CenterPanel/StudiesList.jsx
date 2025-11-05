@@ -5,11 +5,10 @@
 import React, { useContext } from 'react';
 import { getPubMedUrl } from '../../utils/stats';
 import { SearchContext } from '../../context/SearchContext.jsx';
-import { PAGINATION } from '../../utils/constants';
 import styles from './CenterPanel.module.css';
 
 export function StudiesList({ studies = [], isLoading = false }) {
-  const { currentPage, query } = useContext(SearchContext);
+  const { currentPage, pageSize, query } = useContext(SearchContext);
 
   if (isLoading) {
     return (
@@ -26,13 +25,13 @@ export function StudiesList({ studies = [], isLoading = false }) {
         <p>
           {query
             ? `No studies found for "${query}". Try a different query.`
-            : 'No studies found. Try a different search.'}
+            : 'Search for a query to view results'}
         </p>
       </div>
     );
   }
 
-  const startIndex = (currentPage - 1) * PAGINATION.STUDIES_PER_PAGE;
+  const startIndex = (currentPage - 1) * pageSize;
 
   return (
     <div className={styles.studiesList}>

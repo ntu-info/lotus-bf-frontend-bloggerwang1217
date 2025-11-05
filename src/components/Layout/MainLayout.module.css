@@ -55,10 +55,14 @@
 }
 
 .panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--bg-card);
   flex-shrink: 0;
+  gap: 1rem;
 }
 
 .panelTitle {

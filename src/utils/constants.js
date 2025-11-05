@@ -66,6 +66,9 @@ export const PAGINATION = {
   RELATED_TERMS_LIMIT: 10,
 };
 
+// ========== 頁面大小選項 ==========
+export const PAGE_SIZE_OPTIONS = [10, 20, 30, 50, 100];
+
 // ========== 搜尋建議 ==========
 export const SEARCH_CONFIG = {
   DEBOUNCE_DELAY: 300, // 防抖延遲 (ms)

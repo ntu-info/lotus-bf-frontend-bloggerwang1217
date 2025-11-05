@@ -11,6 +11,8 @@ import { SearchInput, AutocompletePopup, LogicOperatorButtons, RelatedTermsTags 
 import styles from './SearchBar.module.css';
 
 const OPERATORS = ['AND', 'OR', 'NOT'];
+// 所有邏輯按鈕：運算符 + 括號 + 座標
+const ALL_BUTTONS = ['AND', 'OR', 'NOT', '(', ')', '[,,]'];
 
 export function SearchContainer({ onSearch }) {
   const { query, setQuery, relatedTerms, setRelatedTerms, setLoading } = useContext(SearchContext);
@@ -21,8 +23,9 @@ export function SearchContainer({ onSearch }) {
   const [allTerms, setAllTerms] = useState([]);
   const [relatedLoading, setRelatedLoading] = useState(false);
 
-  // 焦點管理：追蹤當前焦點在哪個區域
-  const [focusedArea, setFocusedArea] = useState('input');  // 'input' | 'operators' | 'relatedTerms'
+  // 焦點管理：三層架構 (沒有 autocomplete 時)
+  // operators (最上) → input-search (中) → relatedTerms (最下)
+  const [focusedArea, setFocusedArea] = useState('input-search');  // 'operators' | 'input-search' | 'relatedTerms'
   const [focusedOperatorIndex, setFocusedOperatorIndex] = useState(0);
   const [focusedRelatedTermIndex, setFocusedRelatedTermIndex] = useState(0);
 
@@ -82,6 +85,7 @@ export function SearchContainer({ onSearch }) {
     }
 
     if (lastWord && lastWord.length > 0) {
+      setRelatedTerms([]); // Clear old related terms before loading new ones
       setRelatedLoading(true);
       fetchRelatedTerms(lastWord)
         .then((data) => {
@@ -122,7 +126,7 @@ export function SearchContainer({ onSearch }) {
     const textBeforeCursor = query.substring(0, cursorPos);
     const lastSpace = Math.max(textBeforeCursor.lastIndexOf(' '), textBeforeCursor.lastIndexOf('('), textBeforeCursor.lastIndexOf(')'));
     const beforeLastSpace = textBeforeCursor.substring(0, lastSpace + 1);
-    const newQuery = `${beforeLastSpace}${term} `;
+    const newQuery = `${beforeLastSpace}${term}`;
     setQuery(newQuery);
     setShowSuggestions(false);
   };
@@ -152,76 +156,114 @@ export function SearchContainer({ onSearch }) {
     // 注意：SearchInput 元件內部會自動聚焦，無需在此處理
   }, [setQuery]);
 
+  // 處理括號和座標按鈕
+  const handleBracketClick = useCallback((symbol) => {
+    setQuery(prevQuery => {
+      const trimmed = prevQuery.trim();
+      if (symbol === '[,,]') {
+        // 座標按鈕：插入 [,,] 並設置游標到第一個逗號前
+        const newQuery = trimmed === '' ? '[,,]' : `${trimmed} [,,]`;
+        // 延遲設置游標位置到下個事件循環
+        setTimeout(() => {
+          const cursorPos = newQuery.lastIndexOf('[') + 1; // 移到第一個逗號前
+          inputRef.current?.setSelectionRange(cursorPos, cursorPos);
+          inputRef.current?.focus();
+        }, 0);
+        return newQuery;
+      } else {
+        // 括號按鈕 ( 或 )：直接追加
+        const suffix = trimmed.endsWith(' ') || trimmed === '' ? symbol : ` ${symbol}`;
+        return `${trimmed}${suffix}`;
+      }
+    });
+  }, [setQuery]);
+
   const handleKeyDown = useCallback((e) => {
     const { key } = e;
 
-    // Handle autocomplete navigation
+    // ============= AUTOCOMPLETE LAYER (當 autocomplete popup 顯示時) =============
     if (showSuggestions && suggestions.length > 0) {
       if (key === 'ArrowDown') {
         e.preventDefault();
         setSelectedSuggestionIndex((idx) => (idx + 1) % suggestions.length);
-        setFocusedArea('input');
         return;
       } else if (key === 'ArrowUp') {
         e.preventDefault();
         setSelectedSuggestionIndex((idx) => (idx - 1 + suggestions.length) % suggestions.length);
-        setFocusedArea('input');
         return;
       } else if (key === 'Enter' && selectedSuggestionIndex >= 0) {
         e.preventDefault();
         handleSuggestionSelect(suggestions[selectedSuggestionIndex]);
         return;
       } else if (key === 'Escape') {
+        e.preventDefault();
         setShowSuggestions(false);
-        setFocusedArea('input');
         return;
       }
+      // 其他鍵不處理，讓 SearchInput 自己處理
+      return;
     }
 
-    // Handle navigation when autocomplete is not visible
-    if (focusedArea === 'input') {
-      if (key === 'ArrowUp' && !showSuggestions) {
-        e.preventDefault();
-        setFocusedArea('operators');
-        setFocusedOperatorIndex(1); // Default to OR (middle)
-        return;
-      } else if (key === 'ArrowDown' && !showSuggestions) {
-        e.preventDefault();
-        setFocusedArea('relatedTerms');
-        setFocusedRelatedTermIndex(0);
-        return;
-      }
-      // Allow left/right arrow keys in input for cursor movement
-    } else if (focusedArea === 'operators') {
+    // ============= THREE-LAYER NAVIGATION (當沒有 autocomplete 時) =============
+    
+    // 層級1：邏輯按鈕 (OPERATORS)
+    if (focusedArea === 'operators') {
       if (key === 'ArrowDown') {
         e.preventDefault();
-        setFocusedArea('input');
+        setFocusedArea('input-search');
         inputRef.current?.focus();
         return;
       } else if (key === 'ArrowLeft') {
         e.preventDefault();
-        setFocusedOperatorIndex((idx) => (idx - 1 + OPERATORS.length) % OPERATORS.length);
+        setFocusedOperatorIndex((idx) => (idx - 1 + ALL_BUTTONS.length) % ALL_BUTTONS.length);
         return;
       } else if (key === 'ArrowRight') {
         e.preventDefault();
-        setFocusedOperatorIndex((idx) => (idx + 1) % OPERATORS.length);
+        setFocusedOperatorIndex((idx) => (idx + 1) % ALL_BUTTONS.length);
         return;
       } else if (key === 'Enter') {
         e.preventDefault();
-        handleOperatorClick(OPERATORS[focusedOperatorIndex]);
-        setFocusedArea('input');
-        inputRef.current?.focus();
+        const buttonLabel = ALL_BUTTONS[focusedOperatorIndex];
+        if (buttonLabel === '[,,]' || buttonLabel === '(' || buttonLabel === ')') {
+          handleBracketClick(buttonLabel);
+        } else {
+          handleOperatorClick(buttonLabel);
+        }
         return;
       } else if (key === 'Escape') {
         e.preventDefault();
-        setFocusedArea('input');
+        setFocusedArea('input-search');
         inputRef.current?.focus();
         return;
       }
-    } else if (focusedArea === 'relatedTerms') {
+    }
+    
+    // 層級2：搜尋框 (INPUT-SEARCH) - 只接收 ↑ / ↓ / Escape，← / → 由 SearchInput 自己處理
+    else if (focusedArea === 'input-search') {
       if (key === 'ArrowUp') {
         e.preventDefault();
-        setFocusedArea('input');
+        setFocusedArea('operators');
+        setFocusedOperatorIndex(1); // Default to OR (middle)
+        return;
+      } else if (key === 'ArrowDown') {
+        e.preventDefault();
+        setFocusedArea('relatedTerms');
+        setFocusedRelatedTermIndex(0);
+        return;
+      } else if (key === 'Escape') {
+        e.preventDefault();
+        setFocusedArea('operators');
+        setFocusedOperatorIndex(1); // Default to OR (middle)
+        return;
+      }
+      // ← / → 和其他鍵都不在這裡處理，讓 SearchInput 自己處理
+    }
+    
+    // 層級3：相關詞按鈕 (RELATED TERMS) - 直接循環選擇按鈕
+    else if (focusedArea === 'relatedTerms') {
+      if (key === 'ArrowUp') {
+        e.preventDefault();
+        setFocusedArea('input-search');
         inputRef.current?.focus();
         return;
       } else if (key === 'ArrowLeft') {
@@ -232,19 +274,18 @@ export function SearchContainer({ onSearch }) {
         e.preventDefault();
         setFocusedRelatedTermIndex((idx) => (idx + 1) % relatedTerms.length);
         return;
-      } else if (key === 'Enter') {
+      } else if (key === 'Enter' && relatedTerms.length > 0) {
         e.preventDefault();
         handleRelatedTermClick(relatedTerms[focusedRelatedTermIndex].term);
-        setFocusedArea('input');
-        inputRef.current?.focus();
         return;
       } else if (key === 'Escape') {
         e.preventDefault();
-        setFocusedArea('input');
+        setFocusedArea('input-search');
         inputRef.current?.focus();
         return;
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSuggestions, suggestions, selectedSuggestionIndex, focusedArea, focusedOperatorIndex, focusedRelatedTermIndex, relatedTerms]);
 
   useEffect(() => {
@@ -261,19 +302,22 @@ export function SearchContainer({ onSearch }) {
     }
   }, [query, allTerms]);
 
-  // Handle mouse enter on operators - clear keyboard focus
-  const handleOperatorMouseEnter = useCallback(() => {
-    if (focusedArea === 'operators') {
-      setFocusedArea('input');
-    }
-  }, [focusedArea]);
+  // Handle input/clear button focus - clear keyboard layer focus
+  const handleInputFocus = useCallback(() => {
+    setFocusedArea('input-search');
+  }, []);
 
-  // Handle mouse enter on related terms - clear keyboard focus
-  const handleRelatedTermMouseEnter = useCallback(() => {
-    if (focusedArea === 'relatedTerms') {
-      setFocusedArea('input');
-    }
-  }, [focusedArea]);
+  // Handle mouse enter on operators - sync keyboard focus with mouse
+  const handleOperatorMouseEnter = useCallback((index) => {
+    setFocusedArea('operators');
+    setFocusedOperatorIndex(index);
+  }, []);
+
+  // Handle mouse enter on related terms - sync keyboard focus with mouse
+  const handleRelatedTermMouseEnter = useCallback((index) => {
+    setFocusedArea('relatedTerms');
+    setFocusedRelatedTermIndex(index);
+  }, []);
 
   return (
     <div className={styles.searchContainer}>
@@ -292,8 +336,10 @@ export function SearchContainer({ onSearch }) {
           <div className={styles.operatorGroup}>
             <LogicOperatorButtons
               onOperatorClick={handleOperatorClick}
+              onBracketClick={handleBracketClick}
               focusedIndex={focusedArea === 'operators' ? focusedOperatorIndex : undefined}
               onMouseEnter={handleOperatorMouseEnter}
+              onKeyDown={handleKeyDown}
             />
           </div>
         </div>
@@ -302,12 +348,13 @@ export function SearchContainer({ onSearch }) {
         <div className={styles.searchInputContainer}>
           {/* Search Input Component with built-in clear button */}
           <SearchInput
-            placeholder="Enter search term, e.g., amygdala AND fear"
+            placeholder="Enter search term, e.g., amygdala NOT emotion, [0,-18,18] OR [0,0,0]"
             onKeyDown={handleKeyDown}
             onSearch={onSearch}
             showClearButton={true}
             onClear={() => setRelatedTerms([])}
             inputRef={inputRef}
+            onInputFocus={handleInputFocus}
           />
 
           {/* Autocomplete Popup */}
@@ -321,17 +368,22 @@ export function SearchContainer({ onSearch }) {
           />
         </div>
 
-        {/* Related Terms - label always visible, show terms or loading state */}
+        {/* Related Terms - container always visible, content conditional */}
         <div className={styles.relatedTagsContainer}>
-          <span className={styles.relatedTagsLabel}>Related terms:</span>
-          {!showSuggestions && (relatedTerms.length > 0 || relatedLoading) && (
-            <RelatedTermsTags
-              terms={relatedTerms}
-              onTermClick={handleRelatedTermClick}
-              loading={relatedLoading}
-              focusedIndex={focusedArea === 'relatedTerms' ? focusedRelatedTermIndex : -1}
-              onMouseEnter={handleRelatedTermMouseEnter}
-            />
+          {!showSuggestions && (
+            <>
+              <span className={styles.relatedTagsLabel}>Related terms:</span>
+              {(relatedTerms.length > 0 || relatedLoading) && (
+                <RelatedTermsTags
+                  terms={relatedTerms}
+                  onTermClick={handleRelatedTermClick}
+                  loading={relatedLoading}
+                  focusedIndex={focusedArea === 'relatedTerms' ? focusedRelatedTermIndex : -1}
+                  onMouseEnter={handleRelatedTermMouseEnter}
+                  onKeyDown={handleKeyDown}
+                />
+              )}
+            </>
           )}
         </div>
       </div>

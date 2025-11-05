@@ -442,7 +442,19 @@ export function NiiViewer({ query, searchSuccess = false }) {
 
   return (
     <div className={styles.niiViewerContainer}>
-      <h3 className={styles.viewerTitle}>NIfTI Viewer</h3>
+      <div className={styles.niiViewerHeader}>
+        <h3 className={styles.viewerTitle}>NIfTI Viewer</h3>
+        {query && searchSuccess && (
+          <a
+            href={mapUrl}
+            download={query ? `brain_map_${query.replace(/\s+/g, '_')}.nii.gz` : 'brain_map.nii.gz'}
+            className={styles.downloadButtonLink}
+            title="Download NIfTI brain map"
+          >
+            Download Map
+          </a>
+        )}
+      </div>
 
       <div className={styles.controlsPanel}>
         <label className={styles.controlLabel}>

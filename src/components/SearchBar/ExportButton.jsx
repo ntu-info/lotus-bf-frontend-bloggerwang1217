@@ -3,16 +3,44 @@
  * 支援 CSV、JSON、BibTeX、TSV 四種格式
  */
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { SearchContext } from '../../context/SearchContext';
 import { useToast } from '../../hooks/useToast';
 import { exportToCSV, exportToJSON, exportToBibTeX, exportToTSV, generateFilename } from '../../utils/export';
 import styles from './ExportButton.module.css';
 
-export function ExportButton() {
-  const { studies, query } = useContext(SearchContext);
+export function ExportButton({ studies: filteredStudies }) {
+  const { query } = useContext(SearchContext);
   const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Use filtered studies from props (already filtered by year/journal)
+  const studies = filteredStudies;
+
+  // Close dropdown when clicking outside or pressing ESC
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscapeKey);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('keydown', handleEscapeKey);
+      };
+    }
+  }, [isOpen]);
 
   const handleExport = (format) => {
     if (!studies || studies.length === 0) {
@@ -54,14 +82,14 @@ export function ExportButton() {
   const isDisabled = !studies || studies.length === 0;
 
   return (
-    <div className={styles.exportContainer}>
+    <div className={styles.exportContainer} ref={dropdownRef}>
       <button
         className={`${styles.exportButton} ${isDisabled ? styles.disabled : ''}`}
         onClick={() => setIsOpen(!isOpen)}
         disabled={isDisabled}
         title="Export search results"
       >
-        📥 Export
+        Export
       </button>
 
       {isOpen && !isDisabled && (
@@ -71,28 +99,28 @@ export function ExportButton() {
             onClick={() => handleExport('csv')}
             title="Export as CSV (Excel compatible)"
           >
-            📊 CSV
+            CSV
           </button>
           <button
             className={styles.menuItem}
             onClick={() => handleExport('json')}
             title="Export as JSON (for programming)"
           >
-            {} JSON
+            JSON
           </button>
           <button
             className={styles.menuItem}
             onClick={() => handleExport('bibtex')}
             title="Export as BibTeX (for citation managers)"
           >
-            📚 BibTeX
+            BibTeX
           </button>
           <button
             className={styles.menuItem}
             onClick={() => handleExport('tsv')}
             title="Export as TSV (Tab-separated, for spreadsheets)"
           >
-            📈 TSV
+            TSV
           </button>
         </div>
       )}

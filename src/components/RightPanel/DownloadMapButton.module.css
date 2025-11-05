@@ -1,0 +1,54 @@
+/**
+ * DownloadMapButton 樣式
+ * 基於 Coral Red 配色系統，與 ExportButton 風格一致
+ */
+
+.downloadButton {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid var(--coral-primary);
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.downloadButton:hover:not(.disabled) {
+  background-color: transparent;
+  border-color: var(--coral-primary);
+  color: var(--coral-primary);
+  box-shadow: 0 0 0 2px rgba(255, 127, 80, 0.2);
+}
+
+.downloadButton:active:not(.disabled) {
+  background-color: transparent;
+  border-color: var(--coral-dark);
+  color: var(--coral-dark);
+  transform: scale(0.95);
+}
+
+.downloadButton:focus:not(.disabled) {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 127, 80, 0.3);
+}
+
+.downloadButton.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .downloadButton {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}

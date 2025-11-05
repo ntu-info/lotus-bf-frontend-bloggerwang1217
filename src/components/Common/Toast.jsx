@@ -6,20 +6,10 @@
 import React from 'react';
 import styles from './Toast.module.css';
 
-const iconMap = {
-  success: '✅',
-  error: '❌',
-  info: 'ℹ️',
-  warning: '⚠️',
-};
-
 export function Toast({ id, message, type = 'info', action, onClose }) {
-  const icon = iconMap[type];
-
   return (
     <div className={`${styles.toast} ${styles[`toast-${type}`]}`}>
       <div className={styles.toastContent}>
-        <span className={styles.toastIcon}>{icon}</span>
         <span className={styles.toastMessage}>{message}</span>
       </div>
 

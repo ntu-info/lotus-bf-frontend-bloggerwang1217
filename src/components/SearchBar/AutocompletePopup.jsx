@@ -3,7 +3,7 @@
  * Displays search suggestions in a dropdown with keyboard navigation
  * Reused from NeurosynthSearch/components/SuggestionsList.jsx
  */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { highlightPrefix } from '../../utils/textUtils';
 import styles from './SearchBar.module.css';
 
@@ -15,6 +15,18 @@ export function AutocompletePopup({
   onHover,
   prefix = '',
 }) {
+  const selectedItemRef = useRef(null);
+
+  // Scroll focused item into view
+  useEffect(() => {
+    if (selectedIndex >= 0 && selectedItemRef.current) {
+      selectedItemRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
+    }
+  }, [selectedIndex]);
+
   if (!visible || suggestions.length === 0) {
     return null;
   }
@@ -25,6 +37,7 @@ export function AutocompletePopup({
         {suggestions.map((suggestion, index) => (
           <li
             key={`${suggestion}-${index}`}
+            ref={index === selectedIndex ? selectedItemRef : null}
             className={`${styles.suggestionItem} ${
               index === selectedIndex ? styles.focused : ''
             }`}

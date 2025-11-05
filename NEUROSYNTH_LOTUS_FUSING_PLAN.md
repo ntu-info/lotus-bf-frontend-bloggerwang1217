@@ -332,32 +332,9 @@ API 返回 study_id（= PubMed ID）
   ↓
 https://pubmed.ncbi.nlm.nih.gov/{study_id}/
   ↓
-在論文標題後加上「🔗 PubMed」超連結
+論文標題作為可點擊連結
   ↓
 點擊在新頁面打開 PubMed
-```
-
-#### 代碼實現
-
-```jsx
-<a 
-  href={`https://pubmed.ncbi.nlm.nih.gov/${study.study_id}/`}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="pubmed-link"
->
-  🔗 View on PubMed
-</a>
-```
-
-#### 顯示效果
-
-```
-Tracking the hemodynamic responses to reward and punishment
-[Delgado MR, et al. | 2000 | Journal of neurophysiology] 🔗 PubMed
-│
-└─ 點擊後跳轉到：
-   https://pubmed.ncbi.nlm.nih.gov/11110834/
 ```
 
 #### 依賴套件
@@ -480,31 +457,13 @@ API 返回 study_id（即 PubMed ID）
 自動組成 PubMed URL：
   https://pubmed.ncbi.nlm.nih.gov/{study_id}/
   ↓
-在每篇論文後面加上「🔗 PubMed」點擊連結
+論文標題作為可點擊連結
 ```
 
 - **輸入**：`study_id` - 來自 `/query/.../studies` API
 - **前端處理**：URL 組合 + `<a>` 標籤
 - **輸出**：可點擊的 PubMed 連結，直接跳轉查看論文
 - **依賴套件**：無需額外套件
-
-**前端代碼片段**：
-```jsx
-<a 
-  href={`https://pubmed.ncbi.nlm.nih.gov/${study.study_id}/`}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="pubmed-link"
->
-  🔗 PubMed
-</a>
-```
-
-**展示方式**：
-```
-Tracking the hemodynamic responses to reward and punishment... 
-[Delgado MR, et al. | 2000 | Journal of neurophysiology] 🔗 PubMed
-```
 
 ---
 
@@ -588,29 +547,12 @@ study_id 即 PubMed ID
 自動組成 PubMed URL：
   https://pubmed.ncbi.nlm.nih.gov/{study_id}/
   ↓
-在每篇論文後面加上「🔗 PubMed」點擊連結
+論文標題作為可點擊連結
 ```
 
 **範例**：
 - study_id: `11110834`
 - PubMed 連結: `https://pubmed.ncbi.nlm.nih.gov/11110834/`
-- 展示方式：
-  ```
-  Tracking the hemodynamic responses to reward and punishment... 
-  [Authors: Delgado MR, et al. | 2000] 🔗 PubMed
-  ```
-
-**前端代碼片段**：
-```jsx
-<a 
-  href={`https://pubmed.ncbi.nlm.nih.gov/${study.study_id}/`}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="pubmed-link"
->
-  🔗 PubMed
-</a>
-```
 
 **依賴套件**：無需額外套件，純 HTML `<a>` 標籤
 

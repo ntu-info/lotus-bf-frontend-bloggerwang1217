@@ -8,6 +8,7 @@ import { StudiesList } from './StudiesList';
 import { Pagination } from './Pagination';
 import { SortControl } from './SortControl';
 import { ExportButton } from '../SearchBar/ExportButton';
+import { FilterTags } from './FilterTags';
 import { PAGINATION } from '../../utils/constants';
 import { sortStudies } from '../../utils/stats';
 import styles from './CenterPanel.module.css';
@@ -21,17 +22,35 @@ export function CenterPanel({ onPageChange }) {
     totalCount,
     sortField,
     sortDirection,
+    pageSize, // Dynamic page size from context
+    filters, // Active filters from chart clicks
   } = useContext(SearchContext);
 
-  // 對論文進行排序
-  const sortedStudies = useMemo(() => {
-    return sortStudies(studies, sortField, sortDirection);
-  }, [studies, sortField, sortDirection]);
+  // 先根據 filters 過濾，再排序
+  const filteredAndSortedStudies = useMemo(() => {
+    let filtered = [...studies];
 
-  // Client-side pagination: slice the sorted list of studies for the current page
-  const startIndex = (currentPage - 1) * PAGINATION.STUDIES_PER_PAGE;
-  const endIndex = startIndex + PAGINATION.STUDIES_PER_PAGE;
-  const paginatedStudies = sortedStudies.slice(startIndex, endIndex);
+    // Apply year filter
+    if (filters.year !== null) {
+      filtered = filtered.filter(study => study.year === filters.year);
+    }
+
+    // Apply journal filter
+    if (filters.journal !== null) {
+      filtered = filtered.filter(study => study.journal === filters.journal);
+    }
+
+    // Sort the filtered results
+    return sortStudies(filtered, sortField, sortDirection);
+  }, [studies, filters, sortField, sortDirection]);
+
+  // Client-side pagination: slice the filtered and sorted list
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedStudies = filteredAndSortedStudies.slice(startIndex, endIndex);
+
+  // Calculate filtered count for display
+  const filteredCount = filteredAndSortedStudies.length;
 
   return (
     <div className={styles.centerPanel}>
@@ -39,21 +58,30 @@ export function CenterPanel({ onPageChange }) {
         <div className={styles.titleRow}>
           <h2 className={styles.panelTitle}>
             {query && totalCount > 0 ? (
-              `Results for "${query}" (${totalCount.toLocaleString()} found)`
+              <>
+                Results for "{query}" ({totalCount.toLocaleString()} found
+                {filteredCount < totalCount && (
+                  <span className={styles.filteredCount}>, {filteredCount.toLocaleString()} after filters</span>
+                )}
+                )
+              </>
             ) : (
               'Results'
             )}
           </h2>
-          {totalCount > 0 && <ExportButton />}
+          {totalCount > 0 && <ExportButton studies={filteredAndSortedStudies} />}
         </div>
+
+        {/* Filter Tags */}
+        {totalCount > 0 && <FilterTags />}
 
         <div className={styles.headerControls}>
           {totalCount > 0 && <SortControl />}
           {totalCount > 0 && (
             <Pagination
               currentPage={currentPage}
-              totalCount={totalCount}
-              pageSize={PAGINATION.STUDIES_PER_PAGE}
+              totalCount={filteredCount}
+              pageSize={pageSize}
               onPageChange={onPageChange}
             />
           )}

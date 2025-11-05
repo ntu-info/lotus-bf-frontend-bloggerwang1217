@@ -11,11 +11,7 @@ export function Pagination({
   pageSize,
   onPageChange,
 }) {
-  const totalPages = Math.ceil(totalCount / pageSize);
-
-  if (totalPages <= 1) {
-    return null;
-  }
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   const handlePageClick = (page) => {
     if (page >= 1 && page <= totalPages) {

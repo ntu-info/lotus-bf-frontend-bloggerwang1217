@@ -24,7 +24,7 @@
 .select {
   padding: 6px 10px;
   font-size: 13px;
-  border: 1px solid var(--coral-primary);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   background-color: var(--bg-main);
   color: var(--text-primary);
@@ -34,43 +34,48 @@
 }
 
 .select:hover {
-  border-color: var(--coral-dark);
+  border-color: var(--coral-primary);
 }
 
 .select:focus {
-  outline: 2px solid var(--coral-dark);
-  outline-offset: 2px;
-  border-color: var(--coral-dark);
+  outline: none;
+  border-color: var(--coral-primary);
 }
 
 .directionButton {
-  padding: 6px 10px;
+  height: 32px;
+  padding: 0 10px;
   font-size: 14px;
   font-weight: 600;
-  border: 1px solid var(--coral-primary);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
-  background-color: var(--coral-primary);
-  color: var(--text-on-accent);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
   min-width: 40px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .directionButton:focus {
-  outline: 2px solid var(--coral-dark);
+  outline: 2px solid var(--coral-primary);
   outline-offset: 2px;
 }
 
 .directionButton:hover {
-  background-color: var(--coral-light);
-  border-color: var(--coral-light);
+  background-color: var(--bg-main);
+  border-color: var(--coral-primary);
+  color: var(--coral-primary);
   transform: scale(1.05);
 }
 
 .directionButton:active {
-  background-color: var(--coral-dark);
-  border-color: var(--coral-dark);
+  background-color: var(--coral-primary);
+  border-color: var(--coral-primary);
+  color: white;
   transform: scale(0.95);
 }
 
