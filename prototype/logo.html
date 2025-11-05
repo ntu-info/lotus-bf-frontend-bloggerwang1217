@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LoTUS-BF Logo Prototype</title>
+<style>
+    /* Logo 概念: 
+      - 腦 (Brain): Coral Red (珊瑚紅) 色系
+      - 底座 (Base): Tiffany Blue (蒂芬妮藍) 色系
+      - 顏色 Jitter: 每種顏色都有 3 個深淺變化
+    */
+
+    /* --- 顏色 Jitter 調色盤 --- */
+    
+    /* Brain (Coral Red Palette) */
+    .b1 { background-color: #FF7F50; } /* Coral (主色) */
+    .b2 { background-color: #FFA07A; } /* Light Salmon (亮色) */
+    .b3 { background-color: #FF6347; } /* Tomato (暗色) */
+
+    /* Base (Tiffany Blue Palette) */
+    .t1 { background-color: #40E0D0; } /* Turquoise (主色) */
+    .t2 { background-color: #7FFFD4; } /* Aquamarine (亮色) */
+    .t3 { background-color: #00CED1; } /* Dark Turquoise (暗色) */
+
+    /* Floating Particles (Golden Palette) */
+    .g1 { background-color: #FFD700; } /* Gold (主色) */
+    .g2 { background-color: #FFF8DC; } /* Cornsilk (亮色) */
+    .g3 { background-color: #FFA500; } /* Orange (暗色) */
+
+    /* --- 繪圖區設定 --- */
+    body {
+        background-color: #282828; /* 深色背景，突顯 Logo */
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+    }
+
+    /* 使用 CSS Grid 來精確控制 "像素" 位置
+      這是一個 20x20 的畫布
+    */
+    .logo-canvas {
+        display: grid;
+        grid-template-columns: repeat(20, 15px); /* 每個像素 15x15 px */
+        grid-template-rows: repeat(20, 15px);
+        gap: 1px; /* 像素間的微小縫隙 */
+    }
+
+    /* 定義 "像素" 的基本樣式
+      我們將在 HTML 中用 .b1, .t2 等 class 來上色
+    */
+    .p {
+        width: 15px;
+        height: 15px;
+    }
+
+</style>
+</head>
+<body>
+
+    <div class="logo-canvas">
+
+        <!-- 上方漂浮像素 (隨機分散) - 金色系 -->
+        <div class="p g1" style="grid-row: 5; grid-column: 19;"></div>
+        <div class="p g2" style="grid-row: 3; grid-column: 2;"></div>
+        <div class="p g3" style="grid-row: 1; grid-column: 4;"></div>
+        <div class="p g1" style="grid-row: 2; grid-column: 7;"></div>
+        <div class="p g2" style="grid-row: 1; grid-column: 15;"></div>
+        <div class="p g3" style="grid-row: 2; grid-column: 17;"></div>
+
+        <!-- N: 左葉 (蓮花花瓣) - 連接 - 向左下延伸 -->
+        <div class="p b1" style="grid-row: 9; grid-column: 10;"></div>
+        <div class="p b2" style="grid-row: 9; grid-column: 5;"></div>
+        <div class="p b1" style="grid-row: 8; grid-column: 8;"></div>
+        <div class="p b1" style="grid-row: 8; grid-column: 7;"></div>
+        <div class="p b3" style="grid-row: 8; grid-column: 4;"></div>
+        <div class="p b2" style="grid-row: 7; grid-column: 7;"></div>
+        <div class="p b3" style="grid-row: 7; grid-column: 5;"></div>
+        <div class="p b2" style="grid-row: 7; grid-column: 3;"></div>
+        <div class="p b1" style="grid-row: 6; grid-column: 6;"></div>
+        <div class="p b1" style="grid-row: 6; grid-column: 3;"></div>
+        <div class="p b3" style="grid-row: 6; grid-column: 2;"></div>
+        <div class="p b3" style="grid-row: 5; grid-column: 5;"></div>
+        <div class="p b2" style="grid-row: 4; grid-column: 4;"></div>
+
+        <!-- O: 中央上層區域 - 連接 -->
+        <div class="p b3" style="grid-row: 7; grid-column: 10;"></div>
+        <div class="p b1" style="grid-row: 5; grid-column: 11;"></div>
+        <div class="p b3" style="grid-row: 6; grid-column: 9;"></div>
+        <div class="p b3" style="grid-row: 6; grid-column: 11;"></div>
+        <div class="p b2" style="grid-row: 5; grid-column: 9;"></div>
+        <div class="p b1" style="grid-row: 4; grid-column: 10;"></div>
+
+        <!-- T: 右葉 (蓮花花瓣) - 連接 - 向右下延伸 -->
+        <div class="p b3" style="grid-row: 8; grid-column: 17;"></div>
+        <div class="p b3" style="grid-row: 9; grid-column: 12;"></div>
+        <div class="p b1" style="grid-row: 8; grid-column: 13;"></div>
+        <div class="p b2" style="grid-row: 7; grid-column: 17;"></div>
+        <div class="p b3" style="grid-row: 7; grid-column: 14;"></div>
+        <div class="p b3" style="grid-row: 6; grid-column: 17;"></div>
+        <div class="p b1" style="grid-row: 6; grid-column: 16;"></div>
+        <div class="p b2" style="grid-row: 5; grid-column: 15;"></div>
+        <div class="p b3" style="grid-row: 4; grid-column: 15;"></div>
+        <div class="p b2" style="grid-row: 4; grid-column: 14;"></div>
+
+        <!-- 蓮花底座 -->
+        <div class="p t1" style="grid-row: 10; grid-column: 3;"></div> 
+        <div class="p t1" style="grid-row: 11; grid-column: 7;"></div>
+        <div class="p t2" style="grid-row: 11; grid-column: 8;"></div>
+        <div class="p t1" style="grid-row: 11; grid-column: 11;"></div>
+        <div class="p t2" style="grid-row: 11; grid-column: 12;"></div>
+        <div class="p t1" style="grid-row: 11; grid-column: 13;"></div>
+        <div class="p t3" style="grid-row: 12; grid-column: 17;"></div>
+
+        <div class="p t2" style="grid-row: 12; grid-column: 6;"></div>
+        <div class="p t1" style="grid-row: 12; grid-column: 7;"></div>
+        <div class="p t1" style="grid-row: 12; grid-column: 8;"></div>
+        <div class="p t3" style="grid-row: 12; grid-column: 9;"></div>
+        <div class="p t3" style="grid-row: 12; grid-column: 11;"></div>
+        <div class="p t1" style="grid-row: 12; grid-column: 13;"></div>
+        <div class="p t2" style="grid-row: 12; grid-column: 14;"></div>
+        
+        <div class="p t1" style="grid-row: 13; grid-column: 7;"></div>
+        <div class="p t3" style="grid-row: 13; grid-column: 8;"></div>
+        <div class="p t2" style="grid-row: 13; grid-column: 10;"></div>
+        <div class="p t3" style="grid-row: 13; grid-column: 12;"></div>
+        <div class="p t1" style="grid-row: 13; grid-column: 13;"></div>
+
+
+    </div>
+
+</body>
+</html>
