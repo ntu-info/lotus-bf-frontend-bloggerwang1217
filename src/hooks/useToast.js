@@ -1,12 +1,12 @@
 /**
- * useToast Hook - 在組件中使用 Toast 通知
+ * useToast Hook - Use toast notifications in a component
  *
- * 使用方式：
+ * Usage:
  *   const toast = useToast();
- *   toast.success('操作成功！');
- *   toast.error('出錯了！');
- *   toast.info('信息提示');
- *   toast.warning('警告訊息');
+ *   toast.success('Operation successful!');
+ *   toast.error('An error occurred!');
+ *   toast.info('Informational message');
+ *   toast.warning('Warning message');
  */
 
 import { useContext } from 'react';
@@ -16,7 +16,7 @@ export function useToast() {
   const context = useContext(ToastContext);
 
   if (!context) {
-    throw new Error('useToast 必須在 ToastProvider 內使用');
+    throw new Error('useToast must be used within a ToastProvider');
   }
 
   return context;

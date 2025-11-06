@@ -1,5 +1,5 @@
 /**
- * 快取管理系統
+ * Cache Management System
  */
 
 import { API_CONFIG } from './constants';
@@ -10,7 +10,7 @@ class CacheManager {
   }
 
   /**
-   * 生成快取鍵
+   * Generate a cache key
    */
   generateKey(endpoint, params = {}) {
     const paramStr = Object.entries(params)
@@ -21,7 +21,7 @@ class CacheManager {
   }
 
   /**
-   * 設置快取
+   * Set a cache entry
    */
   set(endpoint, params, data, duration = Infinity) {
     const key = this.generateKey(endpoint, params);
@@ -37,7 +37,7 @@ class CacheManager {
   }
 
   /**
-   * 獲取快取
+   * Get a cache entry
    */
   get(endpoint, params = {}) {
     const key = this.generateKey(endpoint, params);
@@ -48,7 +48,7 @@ class CacheManager {
       return null;
     }
 
-    // 檢查過期
+    // Check for expiration
     if (entry.expiresAt !== Infinity && Date.now() > entry.expiresAt) {
       this.cache.delete(key);
       console.log(`[Cache] EXPIRED ${key}`);
@@ -60,14 +60,14 @@ class CacheManager {
   }
 
   /**
-   * 檢查是否存在有效快取
+   * Check if a valid cache entry exists
    */
   has(endpoint, params = {}) {
     return this.get(endpoint, params) !== null;
   }
 
   /**
-   * 清除單個快取
+   * Clear a single cache entry
    */
   clear(endpoint, params = {}) {
     const key = this.generateKey(endpoint, params);
@@ -76,7 +76,7 @@ class CacheManager {
   }
 
   /**
-   * 清除所有快取
+   * Clear all cache entries
    */
   clearAll() {
     this.cache.clear();
@@ -84,7 +84,7 @@ class CacheManager {
   }
 
   /**
-   * 獲取快取統計
+   * Get cache statistics
    */
   getStats() {
     return {
@@ -101,26 +101,26 @@ class CacheManager {
   }
 }
 
-// 單例模式
+// Singleton instance
 const cacheManager = new CacheManager();
 
 export default cacheManager;
 
 /**
- * 使用快取的 API 呼叫包裝器
+ * API call wrapper with caching
  */
 export const withCache = async (endpoint, params, apiCallFn, cacheDuration) => {
-  // 首先檢查快取
+  // First, check the cache
   const cachedData = cacheManager.get(endpoint, params);
   if (cachedData) {
     return cachedData;
   }
 
-  // 執行 API 呼叫
+  // Execute the API call
   try {
     const data = await apiCallFn();
     
-    // 保存到快取
+    // Save to cache
     cacheManager.set(endpoint, params, data, cacheDuration);
     
     return data;

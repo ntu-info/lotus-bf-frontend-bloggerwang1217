@@ -6,7 +6,7 @@ import './styles/colors.css'
 import './styles/global.css'
 import './index.css' 
 
-console.log('[main] booting...') // smoke test：打開 DevTools 會看到
+console.log('[main] booting...') // smoke test: you should see this in DevTools
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

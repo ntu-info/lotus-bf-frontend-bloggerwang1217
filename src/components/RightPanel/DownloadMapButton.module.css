@@ -1,6 +1,6 @@
 /**
- * DownloadMapButton 樣式
- * 基於 Coral Red 配色系統，與 ExportButton 風格一致
+ * DownloadMapButton Styles
+ * Based on Coral Red color system, consistent with ExportButton style
  */
 
 .downloadButton {
@@ -45,7 +45,7 @@
   pointer-events: none;
 }
 
-/* 響應式設計 */
+/* Responsive Design */
 @media (max-width: 768px) {
   .downloadButton {
     padding: 6px 12px;

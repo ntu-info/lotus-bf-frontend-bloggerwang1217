@@ -1,12 +1,12 @@
 /**
- * API 層 - 使用 fetch + AbortController
- * 整合了 cacheManager 進行快取、請求取消、完整的錯誤處理
+ * API Layer - using fetch + AbortController
+ * Integrates cacheManager for caching, request cancellation, and full error handling
  */
 
 import { API_CONFIG, API_ENDPOINTS } from './constants';
 import cacheManager from './cache';
 
-// ========== 請求取消控制 ==========
+// ========== Request Cancellation Control ==========
 const abortControllers = {
   terms: null,
   related: null,
@@ -23,11 +23,11 @@ function cancelRequest(type) {
   return abortControllers[type];
 }
 
-// ========== 詞庫相關 API ==========
+// ========== Term-related APIs ==========
 
 /**
- * 獲取所有詞庫 (用於自動完成建議)
- * @returns {Promise<Array>} 所有詞彙的陣列
+ * Fetch all terms (for autocomplete suggestions)
+ * @returns {Promise<Array>} Array of all terms
  */
 export const fetchTerms = async () => {
   const endpoint = API_ENDPOINTS.TERMS;
@@ -59,9 +59,9 @@ export const fetchTerms = async () => {
 };
 
 /**
- * 獲取相關詞 (帶 co-occurrence count 和 Jaccard 距離)
- * @param {string} term - 術語
- * @returns {Promise<Array>} 相關詞陣列
+ * Fetch related terms (with co-occurrence count and Jaccard distance)
+ * @param {string} term - The term
+ * @returns {Promise<Array>} Array of related terms
  */
 export const fetchRelatedTerms = async (term) => {
   const endpoint = API_ENDPOINTS.TERM_DETAIL(term);
@@ -92,11 +92,11 @@ export const fetchRelatedTerms = async (term) => {
   }
 };
 
-// ========== 查詢相關 API ==========
+// ========== Query-related APIs ==========
 
 /**
- * 查詢論文 (獲取全部結果)
- * @param {string} query - 查詢字符串 (支持 AND/OR/NOT/座標等)
+ * Query for studies (fetch all results)
+ * @param {string} query - The query string (supports AND/OR/NOT/coordinates, etc.)
  */
 export const fetchStudies = async (query) => {
   const endpoint = API_ENDPOINTS.QUERY_STUDIES(query);
@@ -130,11 +130,11 @@ export const fetchStudies = async (query) => {
 };
 
 /**
- * 查詢激活座標
- * @param {string} query - 查詢字符串
- * @param {number} limit - 限制數量
- * @param {number} offset - 偏移量
- * @param {number} r - 搜尋半徑 (mm)
+ * Query for activation coordinates
+ * @param {string} query - The query string
+ * @param {number} limit - The number of results to return
+ * @param {number} offset - The offset of the results
+ * @param {number} r - The search radius (mm)
  */
 export const fetchLocations = async (query, limit = 100, offset = 0, r = 6.0) => {
   const endpoint = API_ENDPOINTS.QUERY_LOCATIONS(query);
@@ -171,11 +171,11 @@ export const fetchLocations = async (query, limit = 100, offset = 0, r = 6.0) =>
 };
 
 /**
- * 查詢 NIfTI 3D 影像
- * @param {string} query - 查詢字符串
- * @param {number} voxel - 體素大小 (mm)
- * @param {number} fwhm - 高斯平滑 FWHM (mm)
- * @param {string} kernel - 核函數 ('gauss' or 'uniform')
+ * Query for NIfTI 3D image
+ * @param {string} query - The query string
+ * @param {number} voxel - The voxel size (mm)
+ * @param {number} fwhm - The FWHM of the Gaussian smoothing kernel (mm)
+ * @param {string} kernel - The kernel function ('gauss' or 'uniform')
  */
 export const fetchNiiImage = async (query, voxel = 2.0, fwhm = 10.0, kernel = 'gauss') => {
   const endpoint = API_ENDPOINTS.QUERY_NII(query);
@@ -212,7 +212,7 @@ export const fetchNiiImage = async (query, voxel = 2.0, fwhm = 10.0, kernel = 'g
 };
 
 /**
- * 獲取後端幫助信息
+ * Fetch help information from the backend
  */
 export const fetchHelp = async () => {
   // This one is not cached, which is fine.
@@ -228,7 +228,7 @@ export const fetchHelp = async () => {
   }
 };
 
-// ========== 清除快取 ==========
+// ========== Clear Cache ==========
 export const clearCache = (endpoint = null, params = {}) => {
   if (endpoint) {
     cacheManager.clear(endpoint, params);

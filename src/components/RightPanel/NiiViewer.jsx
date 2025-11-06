@@ -56,7 +56,7 @@ export function NiiViewer({ query, searchSuccess = false }) {
   const canvases = [useRef(null), useRef(null), useRef(null)];
 
   const mapUrl = useMemo(() => {
-    // 只在搜尋成功且有 query 時才構建 URL
+    // Only construct URL if search is successful and there is a query
     if (!query || !searchSuccess) return '';
     const u = new URL(`${API_CONFIG.BASE_URL}/query/${encodeURIComponent(query)}/nii`);
     u.searchParams.set('voxel', String(voxel));

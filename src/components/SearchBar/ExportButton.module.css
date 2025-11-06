@@ -1,6 +1,6 @@
 /**
- * ExportButton 樣式
- * 基於 Coral Red + Tiffany Blue 配色系統
+ * ExportButton Styles
+ * Based on Coral Red + Tiffany Blue color system
  */
 
 .exportContainer {
@@ -114,7 +114,7 @@
   background-color: var(--bg-card);
 }
 
-/* 響應式設計 */
+/* Responsive Design */
 
 @media (max-width: 768px) {
   .exportButton {

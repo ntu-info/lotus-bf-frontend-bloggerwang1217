@@ -1,11 +1,11 @@
 /**
- * 匯出工具函數 - 支援 CSV、JSON、BibTeX 格式
+ * Export utility functions - supports CSV, JSON, and BibTeX formats
  */
 
 /**
- * 將論文列表匯出為 CSV 格式
- * @param {Array} studies - 論文列表
- * @param {string} filename - 輸出檔案名稱
+ * Export a list of studies to CSV format
+ * @param {Array} studies - The list of studies
+ * @param {string} filename - The output filename
  */
 export const exportToCSV = (studies = [], filename = 'studies.csv') => {
   if (!studies || studies.length === 0) {
@@ -13,13 +13,13 @@ export const exportToCSV = (studies = [], filename = 'studies.csv') => {
     return;
   }
 
-  // CSV 表頭
+  // CSV headers
   const headers = ['Study ID', 'Title', 'Authors', 'Journal', 'Year', 'DOI', 'PubMed'];
 
-  // 準備資料列
+  // Prepare data rows
   const rows = studies.map(study => [
     study.study_id || '',
-    `"${(study.title || '').replace(/"/g, '""')}"`, // 轉義雙引號
+    `"${(study.title || '').replace(/"/g, '""')}"`, // Escape double quotes
     `"${(study.authors || '').replace(/"/g, '""')}"`,
     `"${(study.journal || '').replace(/"/g, '""')}"`,
     study.year || '',
@@ -27,20 +27,20 @@ export const exportToCSV = (studies = [], filename = 'studies.csv') => {
     study.study_id ? `https://pubmed.ncbi.nlm.nih.gov/${study.study_id}/` : ''
   ]);
 
-  // 組合成 CSV 內容
+  // Combine into CSV content
   const csvContent = [
     headers.join(','),
     ...rows.map(row => row.join(','))
   ].join('\n');
 
-  // 下載檔案
+  // Download the file
   downloadFile(csvContent, filename, 'text/csv;charset=utf-8;');
 };
 
 /**
- * 將論文列表匯出為 JSON 格式
- * @param {Array} studies - 論文列表
- * @param {string} filename - 輸出檔案名稱
+ * Export a list of studies to JSON format
+ * @param {Array} studies - The list of studies
+ * @param {string} filename - The output filename
  */
 export const exportToJSON = (studies = [], filename = 'studies.json') => {
   if (!studies || studies.length === 0) {
@@ -53,9 +53,9 @@ export const exportToJSON = (studies = [], filename = 'studies.json') => {
 };
 
 /**
- * 將論文列表匯出為 BibTeX 格式
- * @param {Array} studies - 論文列表
- * @param {string} filename - 輸出檔案名稱
+ * Export a list of studies to BibTeX format
+ * @param {Array} studies - The list of studies
+ * @param {string} filename - The output filename
  */
 export const exportToBibTeX = (studies = [], filename = 'studies.bib') => {
   if (!studies || studies.length === 0) {
@@ -66,28 +66,28 @@ export const exportToBibTeX = (studies = [], filename = 'studies.bib') => {
   const bibtexEntries = studies.map((study, index) => {
     const key = (study.study_id || `study${index}`).replace(/[^a-zA-Z0-9_-]/g, '');
 
-    let entry = `@article{${key},\n`;
+    let entry = `@article{${key},`;
 
-    if (study.title) entry += `  title={${study.title}},\n`;
-    if (study.authors) entry += `  author={${study.authors}},\n`;
-    if (study.journal) entry += `  journal={${study.journal}},\n`;
-    if (study.year) entry += `  year={${study.year}},\n`;
-    if (study.doi) entry += `  doi={${study.doi}},\n`;
-    if (study.study_id) entry += `  pmid={${study.study_id}},\n`;
+    if (study.title) entry += `  title={${study.title}},`;
+    if (study.authors) entry += `  author={${study.authors}},`;
+    if (study.journal) entry += `  journal={${study.journal}},`;
+    if (study.year) entry += `  year={${study.year}},`;
+    if (study.doi) entry += `  doi={${study.doi}},`;
+    if (study.study_id) entry += `  pmid={${study.study_id}},`;
 
-    entry = entry.replace(/,\n$/, '\n'); // 移除最後一個逗號
-    entry += `}\n\n`;
+    entry = entry.replace(/,$/, ''); // Remove trailing comma
+    entry += `}`;
 
     return entry;
-  }).join('');
+  }).join('\n\n');
 
   downloadFile(bibtexEntries, filename, 'text/plain;charset=utf-8;');
 };
 
 /**
- * 將論文列表匯出為 TSV 格式（用於試算表）
- * @param {Array} studies - 論文列表
- * @param {string} filename - 輸出檔案名稱
+ * Export a list of studies to TSV format (for spreadsheets)
+ * @param {Array} studies - The list of studies
+ * @param {string} filename - The output filename
  */
 export const exportToTSV = (studies = [], filename = 'studies.tsv') => {
   if (!studies || studies.length === 0) {
@@ -95,10 +95,10 @@ export const exportToTSV = (studies = [], filename = 'studies.tsv') => {
     return;
   }
 
-  // TSV 表頭
+  // TSV headers
   const headers = ['Study ID', 'Title', 'Authors', 'Journal', 'Year', 'DOI', 'PubMed'];
 
-  // 準備資料列
+  // Prepare data rows
   const rows = studies.map(study => [
     study.study_id || '',
     study.title || '',
@@ -109,7 +109,7 @@ export const exportToTSV = (studies = [], filename = 'studies.tsv') => {
     study.study_id ? `https://pubmed.ncbi.nlm.nih.gov/${study.study_id}/` : ''
   ]);
 
-  // 組合成 TSV 內容
+  // Combine into TSV content
   const tsvContent = [
     headers.join('\t'),
     ...rows.map(row => row.join('\t'))
@@ -119,10 +119,10 @@ export const exportToTSV = (studies = [], filename = 'studies.tsv') => {
 };
 
 /**
- * 下載檔案助手函數
- * @param {string} content - 檔案內容
- * @param {string} filename - 檔案名稱
- * @param {string} mimeType - MIME 類型
+ * Helper function to download a file
+ * @param {string} content - The file content
+ * @param {string} filename - The filename
+ * @param {string} mimeType - The MIME type
  */
 const downloadFile = (content, filename, mimeType) => {
   const blob = new Blob([content], { type: mimeType });
@@ -137,10 +137,10 @@ const downloadFile = (content, filename, mimeType) => {
 };
 
 /**
- * 生成帶有時間戳的檔案名稱
- * @param {string} baseName - 基礎檔案名稱（不含副檔名）
- * @param {string} extension - 副檔名
- * @returns {string} 帶有時間戳的檔案名稱
+ * Generate a filename with a timestamp
+ * @param {string} baseName - The base filename (without extension)
+ * @param {string} extension - The file extension
+ * @returns {string} The filename with a timestamp
  */
 export const generateFilename = (baseName = 'studies', extension = 'csv') => {
   const timestamp = new Date().toISOString().slice(0, 10); // YYYY-MM-DD

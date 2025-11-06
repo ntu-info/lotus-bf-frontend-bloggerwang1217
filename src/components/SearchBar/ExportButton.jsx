@@ -1,6 +1,6 @@
 /**
- * ExportButton Component - 匯出結果數據
- * 支援 CSV、JSON、BibTeX、TSV 四種格式
+ * ExportButton Component - Export results data
+ * Supports CSV, JSON, BibTeX, and TSV formats
  */
 
 import React, { useState, useContext, useRef, useEffect } from 'react';

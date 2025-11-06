@@ -1,6 +1,6 @@
 /**
- * ToastContainer Component - 顯示所有 Toast 通知
- * 放在頁面右上角，展示通知佇列
+ * ToastContainer Component - Displays all toast notifications
+ * Positioned in the top-right corner, showing a queue of notifications
  */
 
 import React, { useContext } from 'react';

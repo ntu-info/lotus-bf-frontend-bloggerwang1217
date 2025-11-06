@@ -1,4 +1,4 @@
-/* RightPanel 模組樣式 */
+/* RightPanel Module Styles */
 
 .rightPanel {
   display: flex;
@@ -25,7 +25,7 @@
   padding: 1rem;
 }
 
-/* NiiViewer 樣式 */
+/* NiiViewer Styles */
 .niiViewerContainer {
   display: flex;
   flex-direction: column;
@@ -236,7 +236,7 @@
   font-weight: 600;
 }
 
-/* 響應式設計 */
+/* Responsive Design */
 @media (max-width: 1024px) {
   .coordinateInputs {
     grid-template-columns: 1fr 1fr;

@@ -1,22 +1,22 @@
 /**
- * 常數定義 - LoTUS-BF × Neurosynth
+ * Constants - LoTUS-BF × Neurosynth
  */
 
-// ========== API 配置 ==========
+// ========== API Configuration ==========
 export const API_CONFIG = {
-  BASE_URL: 'https://mil.psy.ntu.edu.tw:5000', // LoTUS-BF 後端 URL (生產環境)
-  // 開發環境可改為：'http://localhost:5000'
+  BASE_URL: 'https://mil.psy.ntu.edu.tw:5000', // LoTUS-BF backend URL (production)
+  // For development, can be changed to: 'http://localhost:5000'
   TIMEOUT: 10000,
   CACHE_DURATION: {
-    TERMS: Infinity,        // 詞庫永久快取
-    RELATED: 5 * 60 * 1000, // 相關詞 5 分鐘
-    STUDIES: 5 * 60 * 1000, // 論文 5 分鐘
-    LOCATIONS: 5 * 60 * 1000, // 座標 5 分鐘
-    NII: 10 * 60 * 1000,    // NIfTI 10 分鐘
+    TERMS: Infinity,        // Terms are cached forever
+    RELATED: 5 * 60 * 1000, // Related terms for 5 minutes
+    STUDIES: 5 * 60 * 1000, // Studies for 5 minutes
+    LOCATIONS: 5 * 60 * 1000, // Locations for 5 minutes
+    NII: 10 * 60 * 1000,    // NIfTI for 10 minutes
   }
 };
 
-// ========== API 端點 ==========
+// ========== API Endpoints ==========
 export const API_ENDPOINTS = {
   TERMS: '/terms',
   TERM_DETAIL: (term) => `/terms/${encodeURIComponent(term)}`,
@@ -25,7 +25,7 @@ export const API_ENDPOINTS = {
   QUERY_NII: (query) => `/query/${encodeURIComponent(query)}/nii`,
 };
 
-// ========== 色彩系統 ==========
+// ========== Color System ==========
 export const COLORS = {
   coral: {
     primary: '#FF7F50',
@@ -52,31 +52,31 @@ export const COLORS = {
   }
 };
 
-// ========== 邏輯運算符 ==========
+// ========== Logical Operators ==========
 export const OPERATORS = [
   { id: 'AND', label: 'AND', symbol: '∧' },
   { id: 'OR', label: 'OR', symbol: '∨' },
   { id: 'NOT', label: 'NOT', symbol: '¬' },
 ];
 
-// ========== 分頁設置 ==========
+// ========== Pagination Settings ==========
 export const PAGINATION = {
   STUDIES_PER_PAGE: 30,
   LOCATIONS_PER_PAGE: 100,
   RELATED_TERMS_LIMIT: 10,
 };
 
-// ========== 頁面大小選項 ==========
+// ========== Page Size Options ==========
 export const PAGE_SIZE_OPTIONS = [10, 20, 30, 50, 100];
 
-// ========== 搜尋建議 ==========
+// ========== Search Suggestions ==========
 export const SEARCH_CONFIG = {
-  DEBOUNCE_DELAY: 300, // 防抖延遲 (ms)
+  DEBOUNCE_DELAY: 300, // Debounce delay (ms)
   MIN_QUERY_LENGTH: 1,
   AUTOCOMPLETE_LIMIT: 8,
 };
 
-// ========== NIfTI 參數預設值 ==========
+// ========== NIfTI Parameter Defaults ==========
 export const NIFTI_DEFAULTS = {
   percentile: 95,
   voxelSize: 2.0,
@@ -85,7 +85,7 @@ export const NIFTI_DEFAULTS = {
   overlayAlpha: 0.8,
 };
 
-// ========== 圖表配置 ==========
+// ========== Chart Configuration ==========
 export const CHART_CONFIG = {
   TREND_CHART: {
     height: 300,
@@ -103,14 +103,14 @@ export const CHART_CONFIG = {
 // ========== PubMed URL ==========
 export const PUBMED_BASE_URL = 'https://pubmed.ncbi.nlm.nih.gov';
 
-// ========== 本地存儲鍵值 ==========
+// ========== Local Storage Keys ==========
 export const STORAGE_KEYS = {
   SEARCH_HISTORY: 'lotus-search-history',
   FAVORITES: 'lotus-favorites',
   USER_PREFERENCES: 'lotus-preferences',
 };
 
-// ========== 應用信息 ==========
+// ========== Application Information ==========
 export const APP_INFO = {
   NAME: 'LoTUS-BF × Neurosynth',
   VERSION: '1.0.0',

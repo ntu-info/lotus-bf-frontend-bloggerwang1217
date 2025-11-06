@@ -1,5 +1,5 @@
 /**
- * SearchContext - 全局搜尋狀態管理
+ * SearchContext - Global search state management
  */
 
 import { createContext, useCallback, useState } from 'react';
@@ -7,42 +7,42 @@ import { createContext, useCallback, useState } from 'react';
 export const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
-  // 搜尋框狀態
+  // Search box state
   const [query, setQuery] = useState('');
   const [operator, setOperator] = useState(null);
 
-  // 查詢結果
+  // Query results
   const [studies, setStudies] = useState([]);
   const [locations, setLocations] = useState([]);
   const [niiData, setNiiData] = useState(null);
 
-  // UI 狀態
+  // UI state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchSuccess, setSearchSuccess] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
-  const [pageSize, setPageSize] = useState(30); // 每頁顯示數量
+  const [pageSize, setPageSize] = useState(30); // Number of items per page
 
-  // 排序狀態
+  // Sort state
   const [sortField, setSortField] = useState('year');      // year, journal, title, authors
   const [sortDirection, setSortDirection] = useState('desc'); // asc, desc
 
-  // 篩選器狀態 (從圖表點擊觸發)
+  // Filter state (triggered by chart clicks)
   const [filters, setFilters] = useState({
-    year: null,       // 選中的年份
-    journal: null,    // 選中的期刊名稱
+    year: null,       // Selected year
+    journal: null,    // Selected journal name
   });
 
-  // 相關詞和建議
+  // Related terms and suggestions
   const [relatedTerms, setRelatedTerms] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
-  // 趨勢數據（前端計算）
+  // Trend data (calculated on the frontend)
   const [trendData, setTrendData] = useState(null);
   const [journalData, setJournalData] = useState(null);
 
-  // 重置狀態
+  // Reset state
   const reset = useCallback(() => {
     setStudies([]);
     setLocations([]);

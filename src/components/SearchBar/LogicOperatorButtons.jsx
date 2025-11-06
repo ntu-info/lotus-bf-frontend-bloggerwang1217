@@ -1,5 +1,5 @@
 /**
- * LogicOperatorButtons - 邏輯運算符和括號按鈕
+ * LogicOperatorButtons - Logical operator and parenthesis buttons
  * A presentational component that calls a parent function on click.
  */
 import React, { useContext, useRef, useEffect } from 'react';
@@ -10,8 +10,8 @@ export function LogicOperatorButtons({ onOperatorClick, onBracketClick, focusedI
   const { operator } = useContext(SearchContext);
   const buttonRefs = useRef([]);
 
-  // 所有按鈕：運算符 + 括號 + 座標
-  // focusedIndex 對應到 ALL_BUTTONS 在 SearchContainer 中的順序: ['AND', 'OR', 'NOT', '(', ')', '[,,]']
+  // All buttons: operators + parentheses + coordinates
+  // focusedIndex corresponds to the order of ALL_BUTTONS in SearchContainer: ['AND', 'OR', 'NOT', '(', ')', '[,,]']
   const allButtons = [
     { label: 'AND', id: 'AND' },
     { label: 'OR', id: 'OR' },
@@ -21,7 +21,7 @@ export function LogicOperatorButtons({ onOperatorClick, onBracketClick, focusedI
     { label: '[,,]', id: 'COORD', isCoord: true },
   ];
 
-  // 當焦點指標改變時，聚焦相應的按鈕
+  // When the focus index changes, focus the corresponding button
   useEffect(() => {
     if (focusedIndex !== undefined && focusedIndex >= 0 && focusedIndex < buttonRefs.current.length) {
       buttonRefs.current[focusedIndex]?.focus();

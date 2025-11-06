@@ -1,10 +1,10 @@
 /**
- * 統計工具函數
+ * Statistics utility functions
  */
 
 /**
- * 按年份統計論文
- * @param {Array} studies - 論文列表
+ * Count studies by year
+ * @param {Array} studies - The list of studies
  * @returns {Object} { year: count }
  */
 export const countByYear = (studies = []) => {
@@ -16,8 +16,8 @@ export const countByYear = (studies = []) => {
 };
 
 /**
- * 按期刊統計論文
- * @param {Array} studies - 論文列表
+ * Count studies by journal
+ * @param {Array} studies - The list of studies
  * @returns {Object} { journal: count }
  */
 export const countByJournal = (studies = []) => {
@@ -29,9 +29,9 @@ export const countByJournal = (studies = []) => {
 };
 
 /**
- * 獲取期刊排名 (TOP-K)
- * @param {Array} studies - 論文列表
- * @param {number} topCount - 返回最多數量
+ * Get top-K journals
+ * @param {Array} studies - The list of studies
+ * @param {number} topCount - The maximum number of journals to return
  * @returns {Array} [{ journal, count }, ...]
  */
 export const getTopJournals = (studies = [], topCount = 20) => {
@@ -43,8 +43,8 @@ export const getTopJournals = (studies = [], topCount = 20) => {
 };
 
 /**
- * 轉換年份數據為圖表格式 (Recharts)
- * @param {Array} studies - 論文列表
+ * Convert year data to chart format (Recharts)
+ * @param {Array} studies - The list of studies
  * @returns {Array} [{ year, count }, ...]
  */
 export const formatTrendData = (studies = []) => {
@@ -52,7 +52,7 @@ export const formatTrendData = (studies = []) => {
   const minYear = Math.min(...Object.keys(yearCounts).map(Number));
   const maxYear = Math.max(...Object.keys(yearCounts).map(Number));
   
-  // 填補缺失年份
+  // Fill in missing years
   const result = [];
   for (let year = minYear; year <= maxYear; year++) {
     result.push({
@@ -65,12 +65,12 @@ export const formatTrendData = (studies = []) => {
 };
 
 /**
- * 根據特定規則縮寫期刊名稱
- * @param {string} name - 完整的期刊名稱
- * @returns {string} 縮寫後的名稱
+ * Abbreviate journal names according to specific rules
+ * @param {string} name - The full journal name
+ * @returns {string} The abbreviated name
  */
 const abbreviateJournalName = (name) => {
-  // 特殊處理規則
+  // Special handling rules
   if (name.startsWith('The Journal of neuroscience:')) {
     return 'J.N.';
   }
@@ -78,34 +78,34 @@ const abbreviateJournalName = (name) => {
     return 'Cortex';
   }
 
-  // 移除標點符號
+  // Remove punctuation
   const cleanedName = name.replace(/[^a-zA-Z\s]/g, '');
   const words = cleanedName.split(' ').filter(w => w.length > 0);
 
-  // 如果只有一個詞，直接返回
+  // If there is only one word, return it directly
   if (words.length <= 1) {
     return cleanedName;
   }
 
-  // 過濾停用詞並生成首字母縮寫
+  // Filter stop words and generate acronym
   const stopWords = ['the', 'of', 'and', 'a', 'to', 'for', 'in'];
   const acronym = words
     .filter(word => !stopWords.includes(word.toLowerCase()))
     .map(word => word[0].toUpperCase())
     .join('.');
 
-  // 如果是縮寫詞，在結尾加上句點
+  // If it is an acronym, add a period at the end
   if (acronym.includes('.')) {
     return acronym + '.';
   }
 
-  return acronym || cleanedName; // 如果過濾後為空，返回清理過的名稱
+  return acronym || cleanedName; // If the result is empty, return the cleaned name
 };
 
 /**
- * 轉換期刊數據為圖表格式 (Recharts)
- * @param {Array} studies - 論文列表
- * @param {number} topCount - 返回最多數量
+ * Convert journal data to chart format (Recharts)
+ * @param {Array} studies - The list of studies
+ * @param {number} topCount - The maximum number of journals to return
  * @returns {Array} [{ name, count }, ...]
  */
 export const formatJournalData = (studies = [], topCount = 20) => {
@@ -113,14 +113,14 @@ export const formatJournalData = (studies = [], topCount = 20) => {
     .map(({ journal, count }) => ({
       name: journal,
       count,
-      shortName: abbreviateJournalName(journal), // 使用新的縮寫函式
+      shortName: abbreviateJournalName(journal), // Use the new abbreviation function
     }));
 };
 
 /**
- * 計算基本統計信息
- * @param {Array} studies - 論文列表
- * @returns {Object} 統計信息
+ * Calculate basic statistics
+ * @param {Array} studies - The list of studies
+ * @returns {Object} The statistics
  */
 export const getBasicStats = (studies = []) => {
   if (studies.length === 0) {
@@ -151,11 +151,11 @@ export const getBasicStats = (studies = []) => {
 };
 
 /**
- * 按 co-occurrence 和 Jaccard 相似度篩選相關詞
- * @param {Array} relatedTerms - API 返回的相關詞列表
- * @param {number} topK - 返回最多數量
- * @param {string} method - 篩選方法 ('co_count' or 'jaccard')
- * @returns {Array} 篩選後的相關詞
+ * Filter related terms by co-occurrence and Jaccard similarity
+ * @param {Array} relatedTerms - The list of related terms from the API
+ * @param {number} topK - The maximum number of terms to return
+ * @param {string} method - The filtering method ('co_count' or 'jaccard')
+ * @returns {Array} The filtered related terms
  */
 export const selectRelatedTerms = (relatedTerms = [], topK = 10, method = 'co_count') => {
   if (!relatedTerms || relatedTerms.length === 0) {
@@ -176,18 +176,18 @@ export const selectRelatedTerms = (relatedTerms = [], topK = 10, method = 'co_co
 };
 
 /**
- * 生成 PubMed URL
- * @param {string} studyId - 論文 ID (即 PubMed ID)
- * @returns {string} PubMed URL
+ * Generate a PubMed URL
+ * @param {string} studyId - The study ID (i.e., PubMed ID)
+ * @returns {string} The PubMed URL
  */
 export const getPubMedUrl = (studyId) => {
   return `https://pubmed.ncbi.nlm.nih.gov/${studyId}/`;
 };
 
 /**
- * 計算座標統計 (用於 3D 熱力圖)
- * @param {Array} locations - 座標列表 [{x, y, z}, ...]
- * @returns {Object} 座標統計
+ * Calculate coordinate statistics (for 3D heatmap)
+ * @param {Array} locations - The list of coordinates [{x, y, z}, ...]
+ * @returns {Object} The coordinate statistics
  */
 export const getLocationStats = (locations = []) => {
   if (locations.length === 0) {
@@ -218,11 +218,11 @@ export const getLocationStats = (locations = []) => {
 };
 
 /**
- * 對論文列表進行排序
- * @param {Array} studies - 論文列表
- * @param {string} sortField - 排序欄位 (year, journal, title, authors)
- * @param {string} sortDirection - 排序方向 (asc, desc)
- * @returns {Array} 排序後的論文列表
+ * Sort a list of studies
+ * @param {Array} studies - The list of studies
+ * @param {string} sortField - The field to sort by (year, journal, title, authors)
+ * @param {string} sortDirection - The sort direction (asc, desc)
+ * @returns {Array} The sorted list of studies
  */
 export const sortStudies = (studies = [], sortField = 'year', sortDirection = 'desc') => {
   if (!studies || studies.length === 0) return [];
@@ -232,7 +232,7 @@ export const sortStudies = (studies = [], sortField = 'year', sortDirection = 'd
   sorted.sort((a, b) => {
     let valueA, valueB;
 
-    // 取得排序欄位的值
+    // Get the values of the sort field
     switch (sortField) {
       case 'year':
         valueA = (a.year || 0);
@@ -255,7 +255,7 @@ export const sortStudies = (studies = [], sortField = 'year', sortDirection = 'd
         valueB = (b.year || 0);
     }
 
-    // 比較
+    // Compare
     let comparison = 0;
     if (typeof valueA === 'number') {
       comparison = valueA - valueB;
@@ -263,7 +263,7 @@ export const sortStudies = (studies = [], sortField = 'year', sortDirection = 'd
       comparison = valueA.localeCompare(valueB);
     }
 
-    // 根據方向反轉
+    // Reverse based on direction
     return sortDirection === 'asc' ? comparison : -comparison;
   });
 

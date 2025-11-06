@@ -1,4 +1,4 @@
-/* MainLayout 模組樣式 */
+/* MainLayout Styles */
 
 .mainLayout {
   display: flex;
@@ -80,7 +80,7 @@
   flex-direction: column;
 }
 
-/* 響應式設計 - 平板 */
+/* Responsive Design - Tablet */
 @media (max-width: 1200px) {
   .container {
     grid-template-columns: 280px 1fr 300px;
@@ -105,7 +105,7 @@
   }
 }
 
-/* 響應式設計 - 手機 */
+/* Responsive Design - Mobile */
 @media (max-width: 768px) {
   .mainLayout {
     height: auto;

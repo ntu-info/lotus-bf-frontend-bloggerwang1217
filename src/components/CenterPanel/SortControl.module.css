@@ -1,6 +1,6 @@
 /**
- * SortControl 樣式
- * 基於 Coral Red + Tiffany Blue 配色系統
+ * SortControl Styles
+ * Based on Coral Red + Tiffany Blue color system
  */
 
 .sortControl {
@@ -79,7 +79,7 @@
   transform: scale(0.95);
 }
 
-/* 響應式設計 */
+/* Responsive Design */
 
 @media (max-width: 768px) {
   .sortControl {

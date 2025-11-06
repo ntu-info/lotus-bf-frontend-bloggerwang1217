@@ -10,7 +10,7 @@ import styles from './SearchBar.module.css';
 export function SearchInput({
   placeholder = 'Enter search term, e.g., amygdala NOT emotion, [0,-18,18] OR [0,0,0]',
   onSearch,
-  onKeyDown,        // 父元件傳入的鍵盤處理（用於自動完成導航）
+  onKeyDown,        // Keyboard handler from parent component (for autocomplete navigation)
   showClearButton = true,
   onClear,
   inputRef: parentInputRef, // Ref from parent for keyboard navigation

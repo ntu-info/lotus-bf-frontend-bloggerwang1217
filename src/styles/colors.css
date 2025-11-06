@@ -1,31 +1,31 @@
 /* =====================================
-   Neurosynth-LoTUS 色彩系統 (淺色主題)
-   來自 NEUROSYNTH_LOTUS_FUSING_PLAN.md
+   Neurosynth-LoTUS Color System (Light Theme)
+   From NEUROSYNTH_LOTUS_FUSING_PLAN.md
    ===================================== */
 
 :root {
-  /* Coral Red 系列 (腦部元素、主要動作) */
-  --coral-primary:     #fa7665;    /* 主色 - 標題、強調、邏輯按鈕 */
-  --coral-light:       #FFA07A;    /* 亮色 - 懸停、超連結 */
-  --coral-dark:        #E6683C;    /* 暗色 - 活動狀態 */
+  /* Coral Red Series (brain elements, primary actions) */
+  --coral-primary:     #fa7665;    /* Primary color - titles, emphasis, logical buttons */
+  --coral-light:       #FFA07A;    /* Light color - hover, hyperlinks */
+  --coral-dark:        #E6683C;    /* Dark color - active state */
 
-  /* Tiffany Blue 系列 (基礎、互動元素) */
-  --tiffany-primary:   #40E0D0;    /* 主色 - 按鈕、區塊背景 */
-  --tiffany-light:     #7FFFD4;    /* 亮色 - 懸停 */
-  --tiffany-dark:      #00CED1;    /* 暗色 - 邊框、陰影 */
+  /* Tiffany Blue Series (base, interactive elements) */
+  --tiffany-primary:   #40E0D0;    /* Primary color - buttons, block backgrounds */
+  --tiffany-light:     #7FFFD4;    /* Light color - hover */
+  --tiffany-dark:      #00CED1;    /* Dark color - borders, shadows */
 
 
 
-  /* Golden 系列 (裝飾、強調) */
-  --accent-gold:       #FFD700;    /* 金色 - 裝飾 */
-  --accent-orange:     #FFA500;    /* 橙色 - 警告、次要強調 */
+  /* Golden Series (decoration, emphasis) */
+  --accent-gold:       #FFD700;    /* Gold - decoration */
+  --accent-orange:     #FFA500;    /* Orange - warnings, secondary emphasis */
 
-  /* 中性色 (淺色主題) */
-  --bg-header:         #F1F3F5;    /* 頂部區塊背景 (淺灰) */
-  --bg-main:           #FFFFFF;    /* 主內容區背景 (白色) */
-  --bg-card:           #F8F9FA;    /* 卡片背景 (次要灰) */
-  --text-primary:      #212529;    /* 主文字 (深灰) */
-  --text-on-accent:    #FFFFFF;    /* 在強調色塊上的文字 (白色) */
-  --text-secondary:    #6C757D;    /* 次要文字 (中灰) */
-  --border-color:      #DEE2E6;    /* 邊框 (淺灰) */
+  /* Neutral Colors (light theme) */
+  --bg-header:         #F1F3F5;    /* Top block background (light gray) */
+  --bg-main:           #FFFFFF;    /* Main content area background (white) */
+  --bg-card:           #F8F9FA;    /* Card background (secondary gray) */
+  --text-primary:      #212529;    /* Primary text (dark gray) */
+  --text-on-accent:    #FFFFFF;    /* Text on accent color blocks (white) */
+  --text-secondary:    #6C757D;    /* Secondary text (medium gray) */
+  --border-color:      #DEE2E6;    /* Borders (light gray) */
 }

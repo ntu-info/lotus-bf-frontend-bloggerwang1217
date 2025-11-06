@@ -1,6 +1,6 @@
 /**
- * Toast 組件樣式
- * 支持淺色主題，採用 Coral Red + Tiffany Blue 配色
+ * Toast Component Styles
+ * Supports light theme with Coral Red + Tiffany Blue color scheme
  */
 
 .toast {
@@ -41,7 +41,7 @@
   }
 }
 
-/* Toast 類型特定樣式 */
+/* Toast type specific styles */
 
 .toast-success {
   background-color: #e7fafa;
@@ -67,7 +67,7 @@
   color: #a05300;
 }
 
-/* Toast 內容 */
+/* Toast Content */
 
 .toastContent {
   display: flex;
@@ -82,7 +82,7 @@
   max-width: 400px;
 }
 
-/* Toast 動作 */
+/* Toast Actions */
 
 .toastActions {
   display: flex;
@@ -123,7 +123,7 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* 響應式設計 */
+/* Responsive Design */
 
 @media (max-width: 640px) {
   .toast {

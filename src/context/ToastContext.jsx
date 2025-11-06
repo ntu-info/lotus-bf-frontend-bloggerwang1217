@@ -1,6 +1,6 @@
 /**
- * ToastContext - Toast 通知全局狀態管理
- * 支持多個通知、自動消失、不同類型（success, error, info, warning）
+ * ToastContext - Global state management for toast notifications
+ * Supports multiple notifications, auto-dismiss, and different types (success, error, info, warning)
  */
 
 import { createContext, useCallback, useState } from 'react';
@@ -12,12 +12,12 @@ let toastId = 0;
 export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
-  // 新增 Toast
+  // Add a new toast
   const addToast = useCallback((message, options = {}) => {
     const {
       type = 'info',        // success | error | info | warning
-      duration = 3000,      // 自動消失時間（毫秒），0 = 不自動消失
-      action = null,        // 可選的操作按鈕 { label, onClick }
+      duration = 3000,      // Auto-dismiss duration (ms), 0 = no auto-dismiss
+      action = null,        // Optional action button { label, onClick }
     } = options;
 
     const id = toastId++;
@@ -25,7 +25,7 @@ export const ToastProvider = ({ children }) => {
 
     setToasts((prev) => [...prev, toast]);
 
-    // 自動消失
+    // Auto-dismiss
     if (duration > 0) {
       setTimeout(() => removeToast(id), duration);
     }
@@ -33,12 +33,12 @@ export const ToastProvider = ({ children }) => {
     return id;
   }, []);
 
-  // 移除 Toast
+  // Remove a toast
   const removeToast = useCallback((id) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  // 快捷方法
+  // Shortcut methods
   const success = useCallback((message, options) => {
     return addToast(message, { ...options, type: 'success' });
   }, [addToast]);

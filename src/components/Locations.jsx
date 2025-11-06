@@ -71,7 +71,7 @@ export function Locations ({ query }) {
     <div className='flex flex-col rounded-2xl border'>
       <div className='flex items-center justify-between p-3'>
         <div className='font-semibold'>Locations</div>
-        <div className='text-sm text-gray-500'>{query ? `query: ${query}` : '請在上方建立查詢'}</div>
+        <div className='text-sm text-gray-500'>{query ? `query: ${query}` : 'Please create a query above'}</div>
       </div>
 
       <div className='flex flex-wrap items-end gap-3 px-3 pb-2 text-sm'>
@@ -86,7 +86,7 @@ export function Locations ({ query }) {
         </label>
       </div>
 
-      {!query && <div className='px-3 pb-4 text-sm text-gray-500'>尚未提供查詢字串。</div>}
+      {!query && <div className='px-3 pb-4 text-sm text-gray-500'>Query string not provided.</div>}
       {query && loading && (
         <div className='grid gap-3 p-3'>
           {Array.from({ length: 6 }).map((_, i) => (

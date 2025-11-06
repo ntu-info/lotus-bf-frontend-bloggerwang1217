@@ -26,7 +26,7 @@ export function CenterPanel({ onPageChange }) {
     filters, // Active filters from chart clicks
   } = useContext(SearchContext);
 
-  // 先根據 filters 過濾，再排序
+  // First filter by `filters`, then sort
   const filteredAndSortedStudies = useMemo(() => {
     let filtered = [...studies];
 

@@ -1,5 +1,5 @@
 /* =====================================
-   全局樣式 - LoTUS-BF × Neurosynth
+   Global Styles - LoTUS-BF × Neurosynth
    ===================================== */
 
 @import './colors.css';
@@ -30,7 +30,7 @@ body {
   min-height: 100vh;
 }
 
-/* ========== 排版 ========== */
+/* ========== Typography ========== */
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
@@ -67,7 +67,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* ========== 表單 ========== */
+/* ========== Forms ========== */
 
 input, textarea, select {
   font-family: inherit;
@@ -96,7 +96,7 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(64, 224, 208, 0.1);
 }
 
-/* ========== 按鈕 ========== */
+/* ========== Buttons ========== */
 
 button {
   font-family: inherit;
@@ -114,7 +114,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* 主要按鈕 (珊瑚紅) */
+/* Primary Button (Coral Red) */
 .btn-primary {
   background-color: var(--coral-primary);
   color: var(--text-on-accent);
@@ -129,7 +129,7 @@ button:disabled {
   background-color: var(--coral-dark);
 }
 
-/* 次要按鈕 (蒂芬妮藍) */
+/* Secondary Button (Tiffany Blue) */
 .btn-secondary {
   background-color: var(--tiffany-primary);
   color: var(--text-on-accent);
@@ -144,7 +144,7 @@ button:disabled {
   background-color: var(--tiffany-dark);
 }
 
-/* 標籤按鈕 (綠色) */
+/* Tag Button (Green) */
 .btn-tag {
   background-color: var(--tag-success);
   color: var(--text-on-accent);
@@ -164,7 +164,7 @@ button:disabled {
   background-color: var(--tag-success-dark);
 }
 
-/* ========== 卡片 ========== */
+/* ========== Cards ========== */
 
 .card {
   background-color: var(--bg-card);
@@ -179,7 +179,7 @@ button:disabled {
   box-shadow: var(--shadow-md);
 }
 
-/* ========== 工具類 ========== */
+/* ========== Utility Classes ========== */
 
 .text-primary {
   color: var(--text-primary);
@@ -209,14 +209,14 @@ button:disabled {
   box-shadow: var(--shadow-md);
 }
 
-/* ========== 響應式 ========== */
+/* ========== Responsive ========== */
 
 @media (max-width: 1024px) {
-  /* 平板端調整 */
+  /* Tablet adjustments */
 }
 
 @media (max-width: 768px) {
-  /* 手機端調整 */
+  /* Mobile adjustments */
   h1 {
     font-size: 1.5rem;
   }
@@ -226,7 +226,7 @@ button:disabled {
   }
 }
 
-/* ========== 滾動條美化 ========== */
+/* ========== Scrollbar Styling ========== */
 
 ::-webkit-scrollbar {
   width: 8px;

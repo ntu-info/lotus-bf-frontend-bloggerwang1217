@@ -1,6 +1,6 @@
 /**
- * Toast Component - 單個 Toast 通知顯示
- * 支持 success, error, info, warning 四種類型
+ * Toast Component - Displays a single toast notification
+ * Supports success, error, info, and warning types
  */
 
 import React from 'react';

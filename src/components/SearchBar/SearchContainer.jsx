@@ -11,7 +11,7 @@ import { SearchInput, AutocompletePopup, LogicOperatorButtons, RelatedTermsTags 
 import styles from './SearchBar.module.css';
 
 const OPERATORS = ['AND', 'OR', 'NOT'];
-// 所有邏輯按鈕：運算符 + 括號 + 座標
+// All logic buttons: operators + parentheses + coordinates
 const ALL_BUTTONS = ['AND', 'OR', 'NOT', '(', ')', '[,,]'];
 
 export function SearchContainer({ onSearch }) {

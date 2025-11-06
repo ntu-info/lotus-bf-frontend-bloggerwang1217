@@ -1,6 +1,6 @@
 /**
- * SortControl Component - 論文列表排序控制
- * 提供排序欄位和方向選擇，以及顯示選項
+ * SortControl Component - Sort controls for the study list
+ * Provides options for sort field and direction, and display options
  */
 
 import React, { useContext } from 'react';

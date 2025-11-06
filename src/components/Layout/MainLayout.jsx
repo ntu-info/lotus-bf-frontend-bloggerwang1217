@@ -64,7 +64,7 @@ export function MainLayout() {
           setTotalCount(0);
         }
 
-        // 搜尋成功（無論結果如何）
+        // Search successful (regardless of results)
         setSearchSuccess(true);
 
         // Fetch other data in parallel
@@ -72,7 +72,7 @@ export function MainLayout() {
         fetchHelp(searchQuery).catch(err => console.warn('Error fetching help:', err));
 
       } catch {
-        // 搜尋失敗，不呼叫 right panel，不顯示 toast
+        // Search failed, do not call right panel, do not show toast
         setSearchSuccess(false);
         setStudies([]);
         setTrendData([]);

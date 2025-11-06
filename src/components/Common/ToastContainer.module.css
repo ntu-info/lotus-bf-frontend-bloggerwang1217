@@ -1,6 +1,6 @@
 /**
- * ToastContainer 樣式
- * 固定位置在左下角，允許堆疊多個通知
+ * ToastContainer styles
+ * Fixed position at bottom left corner, allows stacking of multiple notifications
  */
 
 .toastContainer {
@@ -15,7 +15,7 @@
   pointer-events: auto;
 }
 
-/* 響應式設計 */
+/* Responsive Design */
 
 @media (max-width: 768px) {
   .toastContainer {
